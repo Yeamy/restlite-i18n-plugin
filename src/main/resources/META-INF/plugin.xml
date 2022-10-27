@@ -14,20 +14,20 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-    This plugin helps you with <b>JAVA International<\b> development.<br>
+    This plugin helps you with <b>JAVA International</b> development.<br>
     Its inspiration comes from Mybatis, create simple customization files and generate java class with it.<br>
-    <b>1.<\b> Generate *.lang file for your project/module: Tools → RestLite I18n → Generate Lang File<br>
-    <b>2.<\b> Modify your lang file in restlite-i18n(the same level as the src directory), Grammar of lang-file are all in the sample file.<br>
-    <b>3.<\b> Generate *.java class by lang file: Tools → RestLite I18n → Generate Java Class<br>
-    <b>4.<\b> Regenerate java class will overwrite the olds. If you delete the lang file, please delete the class by yourself.<br>
+    <b>1.</b> Generate *.lang file for your project/module: Tools → RestLite I18n → Generate Lang File<br>
+    <b>2.</b> Modify your lang file in restlite-i18n(the same level as the src directory), Grammar of lang-file are all in the sample file.<br>
+    <b>3.</b> Generate *.java class by lang file: Tools → RestLite I18n → Generate Java Class<br>
+    <b>4.</b> Regenerate java class will overwrite the olds. If you delete the lang file, please delete the class by yourself.<br>
     Wish it work for you.<br>
     <br>
-    该插件可以帮助你解决开发<b>JAVA国际化开发<\b>的问题。<br>
+    该插件可以帮助你解决开发<b>JAVA国际化开发</b>的问题。<br>
     其灵感来源于Mybatis，通过简单的自定义文件生成多语言Java类。<br>
-    <b>1、<\b>为你的项目/Module生成lang文件: Tools → RestLite I18n → Generate Lang File<br>
-    <b>2、<\b>修改lang文件（文件在src同级目录下的restlite-i18n目录内),lang文件的语法都在示例文件中。<br>
-    <b>3、<\b>根据lang文件生成java类: Tools → RestLite I18n → Generate Java Class<br>
-    <b>4、<\b>重生成Java类会覆盖存在旧的类，如果删除lang文件，请手动删除对应类。<br>
+    <b>1、</b>为你的项目/Module生成lang文件: Tools → RestLite I18n → Generate Lang File<br>
+    <b>2、</b>修改lang文件（文件在src同级目录下的restlite-i18n目录内),lang文件的语法都在示例文件中。<br>
+    <b>3、</b>根据lang文件生成java类: Tools → RestLite I18n → Generate Java Class<br>
+    <b>4、</b>重生成Java类会覆盖存在旧的类，如果删除lang文件，请手动删除对应类。<br>
     希望它对你有用。<br>
     <br>
   ]]></description>
