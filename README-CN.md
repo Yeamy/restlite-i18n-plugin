@@ -1,5 +1,7 @@
 # RestLite i18n Plugin for IntelliJ IDEA
 
+[English](README.md) | 中文
+
 这是一款 IntelliJ IDEA 的插件，为你提供Java国际化开发的解决方案。
 
 其灵感来源于Mybatis，通过简单的自定义文件生成多语言Java类。

@@ -1,5 +1,7 @@
 # RestLite i18n Plugin for IntelliJ IDEA
 
+English | [中文](README-CN.md)
+
 This is a plugin for IntelliJ IDEA, helps you with JAVA International development.
 
 ### What's different
