@@ -17,7 +17,7 @@
     This plugin helps you with <b>JAVA International</b> development.<br>
     Its inspiration comes from Mybatis, create simple customization files and generate java class with it.<br>
     <b>1.</b> Generate *.lang file for your project/module: Tools → RestLite I18n → Generate Lang File<br>
-    <b>2.</b> Modify your lang file in restlite-i18n(the same level as the src directory), Grammar of lang-file are all in the sample file.<br>
+    <b>2.</b> Modify your lang file in restlite-i18n(the same level as the src directory), the syntax of lang-file are all in the sample file.<br>
     <b>3.</b> Generate *.java class by lang file: Tools → RestLite I18n → Generate Java Class<br>
     <b>4.</b> Regenerate java class will overwrite the olds. If you delete the lang file, please delete the class by yourself.<br>
     Wish it work for you.<br>

@@ -34,7 +34,7 @@ public class LocateMethod extends AbstractMethod implements Iterable<Object> {
             int begin = text.indexOf("#{", from);
             if (begin == -1) {
                 if (split != text.length() || data.size() == 0) {
-                    data.add(text.substring(split).replace("##{", "#{"));
+                    data.add(text.substring(split));
                 }
                 break;
             }
@@ -57,7 +57,7 @@ public class LocateMethod extends AbstractMethod implements Iterable<Object> {
                 }
             }
             if (split != begin - 2) {
-                data.add(text.substring(split, begin - 2).replace("##{", "#{"));
+                data.add(text.substring(split, begin - 2));
             }
             data.add(param);
             from = split = end + 1;
@@ -86,7 +86,7 @@ public class LocateMethod extends AbstractMethod implements Iterable<Object> {
         } else {
             for (Object li : data) {
                 if (li instanceof String) {
-                    b.append('"').append(li).append('"');
+                    appendStr(b, li.toString());
                 } else {
                     b.append(li);
                 }
@@ -95,6 +95,39 @@ public class LocateMethod extends AbstractMethod implements Iterable<Object> {
             b.deleteCharAt(b.length() - 1);
         }
         b.append(";}");
+    }
+
+    private static final char[] EC = {'b', 't', 'n', 'f', 'r', '\\'};
+
+    private static boolean isEscapeCharacter(char c) {
+        for (char x : EC) {
+            if (x == c) return true;
+        }
+        return false;
+    }
+
+    // Invalid escape sequence (valid ones are  \b  \t  \n  \f  \r  \"  \'  \\ )
+    private void appendStr(StringBuilder sb, String str) {
+        sb.append('"');
+        char[] cs = str.toCharArray();
+        char previous = 0;
+        for (int i = 0, max = cs.length - 1; i <= max; i++) {
+            char c = cs[i];
+            if (c == '#') {
+                if (i + 2 < max && cs[i + 1] == '#' && cs[i + 2] == '{') {
+                    sb.append("#{");
+                    i++;
+                    continue;
+                }
+            } else if (c == '"') {
+                sb.append('\\');
+            } else if (previous == '\\' && !isEscapeCharacter(c)) {
+                sb.append('\\');
+            }
+            sb.append(c);
+            previous = c;
+        }
+        sb.append('"');
     }
 
 }
