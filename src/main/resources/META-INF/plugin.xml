@@ -37,10 +37,13 @@
     <category>Tools Integration</category>
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.java</depends>
 
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
+        <fileType name="Lang File" implementationClass="yeamy.restlite.i18n.edit.LangFileType"
+                  language="Lang" extensions="lang"/>
     </extensions>
     <actions>
         <group id="yeamy.restlite" text="RestLite I18n" description="Generate i18n file for java" popup="true" icon="/icons/menu.svg">
