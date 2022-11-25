@@ -9,7 +9,7 @@ public class ProxyMethod extends AbstractMethod {
 	}
 
 	@Override
-	void createSourceCode(StringBuilder b) {
+	void createJavaSource(StringBuilder b) {
 		b.append("@Override public String ").append(name).append(" (");
 		if (params.size() > 0) {
 			for (Param p : params()) {

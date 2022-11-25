@@ -15,14 +15,14 @@ public class LocateFile extends AbstractFile<LocateMethod> {
 	}
 
 	@Override
-	protected String createSourceCode() {
+	protected String createJavaSource() {
 		StringBuilder b = new StringBuilder();
 		if (pkg.length() > 0) {
 			b.append("package ").append(pkg).append(";");
 		}
 		b.append("public class ").append(name).append(" implements ").append(conf.getInterface()).append(" {");
 		for (LocateMethod method : methods) {
-			method.createSourceCode(b);
+			method.createJavaSource(b);
 		}
 		b.append("}");
 		return b.toString();

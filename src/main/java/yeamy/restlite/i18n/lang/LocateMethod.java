@@ -72,7 +72,7 @@ public class LocateMethod extends AbstractMethod implements Iterable<Object> {
     }
 
     @Override
-    void createSourceCode(StringBuilder b) {
+    void createJavaSource(StringBuilder b) {
         b.append("@Override public String ").append(name).append(" (");
         if (params.size() > 0) {
             for (Param p : params()) {

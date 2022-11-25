@@ -173,7 +173,7 @@ public class Main {
             }
         }
         try (OutputStream os = new FileOutputStream(vf)) {
-            f.createSourceFile(os);
+            f.createJavaSource(os);
         } catch (IOException ex) {
             ex.printStackTrace();
             throw new LangException("Fail to create class " + f.name);

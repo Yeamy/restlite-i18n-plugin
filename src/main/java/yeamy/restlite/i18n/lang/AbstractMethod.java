@@ -20,6 +20,6 @@ public abstract class AbstractMethod {
 		return params.get(name);
 	}
 
-	abstract void createSourceCode(StringBuilder b);
+	abstract void createJavaSource(StringBuilder b);
 
 }

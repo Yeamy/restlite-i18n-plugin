@@ -13,7 +13,7 @@ public class InterfaceMethod extends AbstractMethod {
     }
 
     @Override
-    public void createSourceCode(StringBuilder b) {
+    public void createJavaSource(StringBuilder b) {
         b.append("String ").append(name).append(" (");
         if (params.size() > 0) {
             for (Param p : params()) {

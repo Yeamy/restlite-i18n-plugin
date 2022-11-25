@@ -17,7 +17,7 @@ public class ProxyFile extends AbstractFile<ProxyMethod> {
     }
 
     @Override
-    protected String createSourceCode() {
+    protected String createJavaSource() {
         StringBuilder b = new StringBuilder();
         if (pkg.length() > 0) {
             b.append("package ").append(pkg).append(";");
@@ -60,7 +60,7 @@ public class ProxyFile extends AbstractFile<ProxyMethod> {
                     .append("> h:f){if (!h.getKey().equals(g.l)){return h.getValue();}}}return map.get(fallback);}}");
         }
         for (AbstractMethod method : methods) {
-            method.createSourceCode(b);
+            method.createJavaSource(b);
         }
         b.append("}");
         return b.toString();

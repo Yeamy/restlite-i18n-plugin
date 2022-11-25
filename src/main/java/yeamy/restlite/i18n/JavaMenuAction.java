@@ -153,7 +153,7 @@ public class JavaMenuAction extends AbstractMenuAction {
             throw new LangException("Fail to create class " + f.name);
         }
         try (OutputStream os = vf.getOutputStream(req)) {
-            f.createSourceFile(os);
+            f.createJavaSource(os);
         } catch (IOException ex) {
             ex.printStackTrace();
             throw new LangException("Fail to create class " + f.name);

@@ -20,7 +20,7 @@ public class InterfaceFile extends AbstractFile<InterfaceMethod> implements Iter
     }
 
     @Override
-    protected String createSourceCode() {
+    protected String createJavaSource() {
         StringBuilder b = new StringBuilder();
         if (pkg.length() > 0) {
             b.append("package ").append(pkg).append(";");
@@ -32,7 +32,7 @@ public class InterfaceFile extends AbstractFile<InterfaceMethod> implements Iter
 //        }
         b.append("public interface ").append(name).append(" {");
         for (InterfaceMethod method : methods) {
-            method.createSourceCode(b);
+            method.createJavaSource(b);
         }
         b.append("}");
         return b.toString();
