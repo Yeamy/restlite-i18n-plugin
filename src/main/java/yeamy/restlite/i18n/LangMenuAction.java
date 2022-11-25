@@ -39,14 +39,14 @@ public class LangMenuAction extends AbstractMenuAction {
         if (config == null || !config.exists()) {
             config = i18n.createChildData(req, BUILD_FILE);
             try (OutputStream os = config.getOutputStream(req)) {
-                os.write("#RestLite i18n build configuration\n\n".getBytes());
-                os.write("#Class name for i18n\n".getBytes());
+                os.write("#RestLite i18n configuration\n\n".getBytes());
+                os.write("#Name of real subject interface\n".getBytes());
                 os.write("name=I18n\n\n".getBytes());
-                os.write("#Proxy class name for i18n\n".getBytes());
+                os.write("#Name of the proxy class\n".getBytes());
                 os.write("proxy=I18nProxy\n\n".getBytes());
-                os.write("#Set the default language/locate(see more about http header Accept-Language: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language)\n".getBytes());
+                os.write("#Default language/locate(see more about http header Accept-Language: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language)\n".getBytes());
                 os.write("default=zh-CN\n\n".getBytes());
-                os.write("#if true generate auto-select-method with param HttpServletRequest (class in servlet)\n".getBytes());
+                os.write("#Set true to generate auto-select-method with param HttpServletRequest (class in servlet)\n".getBytes());
                 os.write("servlet=true\n".getBytes());
             }
         } else {
@@ -57,11 +57,11 @@ public class LangMenuAction extends AbstractMenuAction {
             zhCN = i18n.createChildData(req, "zh-CN.lang");
             try (OutputStream os = zhCN.getOutputStream(req)) {
                 os.write("#井号开头是备注\n".getBytes());
-                os.write("#一行生成一个方法,等号左边问方法名，等号右边为文本内容（包括空格）\n".getBytes());
+                os.write("#一行生成一个方法，等号左边问方法名，等号右边为文本内容（包括空格）\n".getBytes());
                 os.write("#参数名用#{}标注，支持类型限制如下，不填类型既无限制\n".getBytes());
                 os.write("hello=你好#{name}，我是int#{int a}, long#{long l},char#{char c},float#{float f},double#{double d},string#{str s}\n".getBytes());
-                os.write("#如果需要输出 #{ 请使用 ##{ 代替；\"无需加转义符；\\也无需加转义符，除非它后面紧跟着b、t、n、f、r和\\ \n".getBytes());
-                os.write("txt=纯文本##{name} \" \\ \\\\t \\n \\\\\n".getBytes());
+                os.write("#如果需要输出 #{ 请使用 ##{ 代替；\\前无需加转义符，除了\\n和\\r\n".getBytes());
+                os.write("txt=转义符示例##{name} \" \\ \\b \\f \\t \\n  \\r \\\\n\\\\r\n".getBytes());
             }
         } else {
             msg.append("Template file \"/i18n/zh-CN.lang\" exists\n");
@@ -71,11 +71,11 @@ public class LangMenuAction extends AbstractMenuAction {
             enUS = i18n.createChildData(req, "en-US.lang");
             try (OutputStream os = enUS.getOutputStream(req)) {
                 os.write("# I'm remark，start with '#'\n".getBytes());
-                os.write("# One line generate one method, method name on the left of '=' as the text content (include space) on the right\n".getBytes());
+                os.write("# One line generate one method, method name on the left of equals sign as the text content (include space) on the right\n".getBytes());
                 os.write("# Param name in #{}, type limit supported, as the example below; none if no limit.\n".getBytes());
                 os.write("hello=Hello#{name},I'm string#{str s},int#{int a},long#{long l},char#{char c},float#{float f},double#{double d}\n".getBytes());
-                os.write("# Typing #{ with ##{ instead; no need to add escape character for \" nor \\ unless \\b,\\t,\\n,\\f,\\r,\\\\ appear \n".getBytes());
-                os.write("txt=pure text ##{name} \" \\ \\\\t \\n \\\\\n".getBytes());
+                os.write("# Typing #{ with ##{ instead; no need to add escape character for \\ unless except \\n,\\r\n".getBytes());
+                os.write("txt=escape character sample ##{name} \" \\ \\b \\f \\t \\n  \\r \\\\n\\\\r\n".getBytes());
             }
         } else {
             msg.append("Template file \"/i18n/en-US.lang\" exists\n");

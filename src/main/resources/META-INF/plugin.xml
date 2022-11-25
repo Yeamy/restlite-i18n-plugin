@@ -15,22 +15,38 @@
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
     This plugin helps you with <b>JAVA International</b> development.<br>
-    Its inspiration comes from Mybatis, create simple customization files and generate java class with it.<br>
+    Create simple customization files and generate java class with it. All words obtained through methods rather than string format.<br>
+    Wish it work for you.<br>
+    该插件可以帮助你快速实现<b>JAVA国际化开发</b>。<br>
+    通过简单的自定义文件生成多语言Java类，所有词条通过方法获取，而不是Map+String.format形式。<br>
+    希望它对你有用。<br>
+    How to use:<br>
     <b>1.</b> Generate *.lang file for your project/module: Tools → RestLite I18n → Generate Lang File<br>
-    <b>2.</b> Modify your lang file in restlite-i18n(the same level as the src directory), the syntax of lang-file are all in the sample file.<br>
+    <b>2.</b> Add and modify your lang files, the syntax of lang-file are all in the sample file.<br>
     <b>3.</b> Generate *.java class by lang file: Tools → RestLite I18n → Generate Java Class<br>
     <b>4.</b> Regenerate java class will overwrite the olds. If you delete the lang file, please delete the class by yourself.<br>
-    Wish it work for you.<br>
-    <br>
-    该插件可以帮助你解决开发<b>JAVA国际化开发</b>的问题。<br>
-    其灵感来源于Mybatis，通过简单的自定义文件生成多语言Java类。<br>
-    <b>1、</b>为你的项目/Module生成lang文件: Tools → RestLite I18n → Generate Lang File<br>
-    <b>2、</b>修改lang文件（文件在src同级目录下的restlite-i18n目录内),lang文件的语法都在示例文件中。<br>
+    如何使用：<br>
+    <b>1、</b>为你的项目生成lang文件: Tools → RestLite I18n → Generate Lang File<br>
+    <b>2、</b>添加并修改lang文件，lang文件的语法都在示例文件中。<br>
     <b>3、</b>根据lang文件生成java类: Tools → RestLite I18n → Generate Java Class<br>
     <b>4、</b>重生成Java类会覆盖存在旧的类，如果删除lang文件，请手动删除对应类。<br>
-    希望它对你有用。<br>
     <br>
   ]]></description>
+    <change-notes><![CDATA[
+        <b>2.0</b><ul>
+            <li>The generated lang files is saved in the selected java package.</li>
+            <li>Add icon for menu and lang file.</li>
+            <li>Syntax highlighter for lang files.</li>
+            <li>Less escape character, only: ##{ \\n \\r.</li>
+        </ul>
+        <b>2.0</b><ul>
+            <li>生成的lang文件直接保存在java package中。</li>
+            <li>给菜单和lang文件添加图标。</li>
+            <li>lang文件提供语法高亮显示。</li>
+            <li>更少的转义符，只有: ##{ \\n \\r.</li>
+        </ul>
+    ]]>
+    </change-notes>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
@@ -44,19 +60,24 @@
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="Lang File" implementationClass="yeamy.restlite.i18n.edit.LangFileType"
                   language="Lang" extensions="lang"/>
+        <lang.syntaxHighlighterFactory language="Lang"
+                                       implementationClass="yeamy.restlite.i18n.edit.LangSyntaxHighlighterFactory"/>
     </extensions>
     <actions>
-        <group id="yeamy.restlite" text="RestLite I18n" description="Generate i18n file for java" popup="true" icon="/icons/menu.svg">
+        <group id="yeamy.restlite" text="RestLite I18n" description="Generate i18n file for java" popup="true"
+               icon="/icons/menu.svg">
             <add-to-group group-id="ToolsMenu" anchor="last"/>
-            <action id="yeamy.restlite.i18n.LangMenuAction" class="yeamy.restlite.i18n.LangMenuAction" text="Generate Lang File"
+            <action id="yeamy.restlite.i18n.LangMenuAction" class="yeamy.restlite.i18n.LangMenuAction"
+                    text="Generate Lang File"
                     description="Generate sample file of RestLite i18n">
             </action>
-            <action id="yeamy.restlite.i18n.JavaAction" class="yeamy.restlite.i18n.JavaMenuAction" text="Generate Java Class"
+            <action id="yeamy.restlite.i18n.JavaAction" class="yeamy.restlite.i18n.JavaMenuAction"
+                    text="Generate Java Class"
                     description="Generate java class from lang file">
             </action>
         </group>
-<!--        <action id="addRestLiteI18nAction" class="yeamy.restlite.i18n.LangNewAction" text="Add RestLite I18n">-->
-<!--            <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewFile"/>-->
-<!--        </action>-->
+        <!--        <action id="addRestLiteI18nAction" class="yeamy.restlite.i18n.LangNewAction" text="Add RestLite I18n">-->
+        <!--            <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewFile"/>-->
+        <!--        </action>-->
     </actions>
 </idea-plugin>

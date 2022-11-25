@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "yeamy.restlite"
-version = "1.1"
+version = "2.0"
 
 repositories {
     mavenCentral()
