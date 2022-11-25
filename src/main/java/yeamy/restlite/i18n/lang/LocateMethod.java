@@ -97,15 +97,6 @@ public class LocateMethod extends AbstractMethod implements Iterable<Object> {
         b.append(";}");
     }
 
-    private static final char[] EC = {'b', 't', 'n', 'f', 'r', '\\'};
-
-    private static boolean isEscapeCharacter(char c) {
-        for (char x : EC) {
-            if (x == c) return true;
-        }
-        return false;
-    }
-
     // Invalid escape sequence (valid ones are  \b  \t  \n  \f  \r  \"  \'  \\ )
     private void appendStr(StringBuilder sb, String str) {
         sb.append('"');
@@ -121,7 +112,7 @@ public class LocateMethod extends AbstractMethod implements Iterable<Object> {
                 }
             } else if (c == '"') {
                 sb.append('\\');
-            } else if (previous == '\\' && !isEscapeCharacter(c)) {
+            } else if (previous == '\\' && c != 'n' && c != 'r') {
                 sb.append('\\');
             }
             sb.append(c);

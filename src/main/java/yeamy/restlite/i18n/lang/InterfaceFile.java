@@ -21,7 +21,10 @@ public class InterfaceFile extends AbstractFile<InterfaceMethod> implements Iter
 
     @Override
     protected String createSourceCode() {
-        StringBuilder b = new StringBuilder("package ").append(pkg).append(";");
+        StringBuilder b = new StringBuilder();
+        if (pkg.length() > 0) {
+            b.append("package ").append(pkg).append(";");
+        }
 //        if (supportRestLite) {
 //            b.append("import yeamy.restlite.annotation.Generator;");
 //            b.append("@Generator(className = \"").append(pkg).append('.')

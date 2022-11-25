@@ -18,7 +18,10 @@ public class ProxyFile extends AbstractFile<ProxyMethod> {
 
     @Override
     protected String createSourceCode() {
-        StringBuilder b = new StringBuilder("package ").append(pkg).append(";");
+        StringBuilder b = new StringBuilder();
+        if (pkg.length() > 0) {
+            b.append("package ").append(pkg).append(";");
+        }
         if (conf.supportServlet()) {
             b.append("import java.util.*;");
             b.append("import javax.servlet.http.HttpServletRequest;");
