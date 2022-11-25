@@ -43,7 +43,7 @@
     <extensions defaultExtensionNs="com.intellij">
     </extensions>
     <actions>
-        <group id="yeamy.restlite" text="RestLite I18n" description="Generate i18n file for java" popup="true">
+        <group id="yeamy.restlite" text="RestLite I18n" description="Generate i18n file for java" popup="true" icon="/icons/menu.svg">
             <add-to-group group-id="ToolsMenu" anchor="last"/>
             <action id="yeamy.restlite.i18n.LangMenuAction" class="yeamy.restlite.i18n.LangMenuAction" text="Generate Lang File"
                     description="Generate sample file of RestLite i18n">
