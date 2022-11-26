@@ -59,7 +59,7 @@ public class LangMenuAction extends AbstractMenuAction {
                 os.write("#井号开头是备注\n".getBytes());
                 os.write("#一行生成一个方法，等号左边问方法名，等号右边为文本内容（包括空格）\n".getBytes());
                 os.write("#参数名用#{}标注，支持类型限制如下，不填类型既无限制\n".getBytes());
-                os.write("hello=你好#{name}，我是int#{int a}, long#{long l},char#{char c},float#{float f},double#{double d},string#{str s}\n".getBytes());
+                os.write("hello=你好#{name}，我是int#{int a}, long#{long l},short#{short b},char#{char c},float#{float f},double#{double d},string#{str s}\n".getBytes());
                 os.write("#如果需要输出 #{ 请使用 ##{ 代替；\\前无需加转义符，除了\\n和\\r\n".getBytes());
                 os.write("txt=转义符示例##{name} \" \\ \\b \\f \\t \\n  \\r \\\\n\\\\r\n".getBytes());
             }
@@ -73,7 +73,7 @@ public class LangMenuAction extends AbstractMenuAction {
                 os.write("# I'm remark，start with '#'\n".getBytes());
                 os.write("# One line generate one method, method name on the left of equals sign as the text content (include space) on the right\n".getBytes());
                 os.write("# Param name in #{}, type limit supported, as the example below; none if no limit.\n".getBytes());
-                os.write("hello=Hello#{name},I'm string#{str s},int#{int a},long#{long l},char#{char c},float#{float f},double#{double d}\n".getBytes());
+                os.write("hello=Hello#{name},I'm string#{str s},int#{int a},long#{long l},short#{short b},char#{char c},float#{float f},double#{double d}\n".getBytes());
                 os.write("# Typing #{ with ##{ instead; no need to add escape character for \\ unless except \\n,\\r\n".getBytes());
                 os.write("txt=escape character sample ##{name} \" \\ \\b \\f \\t \\n  \\r \\\\n\\\\r\n".getBytes());
             }

@@ -14,6 +14,8 @@ public class Param {
                 return "Int";
             case "long":
                 return "Long";
+            case "short":
+                return "Short";
             case "char":
                 return "Char";
             case "float":
@@ -83,6 +85,7 @@ public class Param {
             case "float":
             case "long":
             case "int":
+            case "short":
             case "char":
                 type = str;
                 break;
