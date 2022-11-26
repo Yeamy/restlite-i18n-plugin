@@ -8,6 +8,25 @@ public class Param {
         this.name = name;
     }
 
+    public String kotlinType() {
+        switch (type) {
+            case "int":
+                return "Int";
+            case "long":
+                return "Long";
+            case "char":
+                return "Char";
+            case "float":
+                return "Float";
+            case "double":
+                return "Double";
+            case "String":
+                return type;
+            default:
+                return "Any";
+        }
+    }
+
     @Override
     public String toString() {
         return name;

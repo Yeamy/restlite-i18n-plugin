@@ -75,6 +75,10 @@
                     text="Generate Java Class"
                     description="Generate java class from lang file">
             </action>
+            <action id="yeamy.restlite.i18n.KotlinAction" class="yeamy.restlite.i18n.KotlinMenuAction"
+                    text="Generate Kotlin Class"
+                    description="Generate Kotlin class from lang file">
+            </action>
         </group>
         <!--        <action id="addRestLiteI18nAction" class="yeamy.restlite.i18n.LangNewAction" text="Add RestLite I18n">-->
         <!--            <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewFile"/>-->

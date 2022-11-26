@@ -97,6 +97,31 @@ public class LocateMethod extends AbstractMethod implements Iterable<Object> {
         b.append(";}");
     }
 
+    @Override
+    void createKotlinSource(StringBuilder b) {
+        b.append("override fun ").append(name).append(" (");
+        if (params.size() > 0) {
+            for (Param p : params()) {
+                b.append(p.name).append(": ").append(p.kotlinType()).append(", ");
+            }
+            b.deleteCharAt(b.length() - 2);
+        }
+        b.append(") : String = \"");
+        if (data.size() == 0) {
+            b.append("\"\"");
+        } else {
+            for (Object li : data) {
+                if (li instanceof String) {
+                    appendKotlinStr(b, li.toString());
+                } else {
+                    b.append('$').append(li);
+                }
+            }
+        }
+        b.append("\"\n");
+
+    }
+
     // Invalid escape sequence (valid ones are  \b  \t  \n  \f  \r  \"  \'  \\ )
     private void appendStr(StringBuilder sb, String str) {
         sb.append('"');
@@ -119,6 +144,26 @@ public class LocateMethod extends AbstractMethod implements Iterable<Object> {
             previous = c;
         }
         sb.append('"');
+    }
+    private void appendKotlinStr(StringBuilder sb, String str) {
+        char[] cs = str.toCharArray();
+        char previous = 0;
+        for (int i = 0, max = cs.length - 1; i <= max; i++) {
+            char c = cs[i];
+            if (c == '#') {
+                if (i + 2 < max && cs[i + 1] == '#' && cs[i + 2] == '{') {
+                    sb.append("#{");
+                    i++;
+                    continue;
+                }
+            } else if (c == '"' || c == '$') {
+                sb.append('\\');
+            } else if (previous == '\\' && c != 'n' && c != 'r') {
+                sb.append('\\');
+            }
+            sb.append(c);
+            previous = c;
+        }
     }
 
 }

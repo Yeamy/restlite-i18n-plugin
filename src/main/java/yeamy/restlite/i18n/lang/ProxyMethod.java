@@ -28,4 +28,23 @@ public class ProxyMethod extends AbstractMethod {
 		b.append(");}");
 	}
 
+	@Override
+	void createKotlinSource(StringBuilder b) {
+		b.append("override fun ").append(name).append(" (");
+		if (params.size() > 0) {
+			for (Param p : params()) {
+				b.append(p.name).append(": ").append(p.kotlinType()).append(", ");
+			}
+			b.deleteCharAt(b.length() - 2);
+		}
+		b.append(") : String = impl!!.").append(name).append("(");
+		Collection<Param> params = params();
+		if (params.size() > 0) {
+			for (Param param : params) {
+				b.append(param.name).append(",");
+			}
+			b.deleteCharAt(b.length() - 1);
+		}
+		b.append(")\n");
+	}
 }

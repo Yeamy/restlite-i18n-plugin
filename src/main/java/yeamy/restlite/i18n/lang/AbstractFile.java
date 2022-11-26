@@ -22,4 +22,12 @@ public abstract class AbstractFile<T extends AbstractMethod> {
     }
 
     protected abstract String createJavaSource();
+
+    public final void createKotlinSource(OutputStream os) throws IOException {
+        String code = createKotlinSource();
+        os.write(code.getBytes());
+        os.flush();
+    }
+
+    protected abstract String createKotlinSource();
 }

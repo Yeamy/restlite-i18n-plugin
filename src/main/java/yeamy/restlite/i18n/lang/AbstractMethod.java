@@ -22,4 +22,6 @@ public abstract class AbstractMethod {
 
 	abstract void createJavaSource(StringBuilder b);
 
+	abstract void createKotlinSource(StringBuilder b);
+
 }

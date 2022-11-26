@@ -23,4 +23,17 @@ public class InterfaceMethod extends AbstractMethod {
         }
         b.append(");");
     }
+
+    @Override
+    void createKotlinSource(StringBuilder b) {
+        b.append("fun ").append(name).append(" (");
+        if (params.size() > 0) {
+            for (Param p : params()) {
+                b.append(p.name).append(": ").append(p.kotlinType()).append(", ");
+            }
+            b.deleteCharAt(b.length() - 2);
+        }
+        b.append(") : String\n");
+
+    }
 }

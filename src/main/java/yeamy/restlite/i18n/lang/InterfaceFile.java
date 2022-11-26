@@ -38,6 +38,20 @@ public class InterfaceFile extends AbstractFile<InterfaceMethod> implements Iter
         return b.toString();
     }
 
+    @Override
+    protected String createKotlinSource() {
+        StringBuilder b = new StringBuilder();
+        if (pkg.length() > 0) {
+            b.append("package ").append(pkg).append('\n');
+        }
+        b.append("interface ").append(name).append(" {\n");
+        for (InterfaceMethod method : methods) {
+            method.createKotlinSource(b);
+        }
+        b.append("}");
+        return b.toString();
+    }
+
     public InterfaceMethod get(String name) {
         return map.get(name);
     }
