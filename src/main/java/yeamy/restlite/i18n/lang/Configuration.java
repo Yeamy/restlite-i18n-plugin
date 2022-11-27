@@ -1,10 +1,13 @@
 package yeamy.restlite.i18n.lang;
 
 public class Configuration {
+    public static final String SERVLET_JAVAX = "javax";
+    public static final String SERVLET_JAKARTA = "jakarta";
+    public static final String SERVLET_RESTLITE = "restlite";
     private final String pkg, name, proxy, def;
-    private boolean servlet, restlite;
+    public final String servlet;
 
-    public Configuration(String pkg, String name, String proxy, String def, String servlet, String restlite) throws LangException {
+    public Configuration(String pkg, String name, String proxy, String def, String servlet) throws LangException {
         if (pkg == null) {
             throw new LangException("\"package\" not defined");
         }
@@ -19,10 +22,23 @@ public class Configuration {
         }
         this.def = def.trim();
         if (servlet != null) {
-            this.servlet = Boolean.parseBoolean(servlet.trim());
-        }
-        if (restlite != null) {
-            this.restlite = Boolean.parseBoolean(restlite.trim());
+            switch (servlet.trim().toLowerCase()) {
+                case "true":
+                case SERVLET_JAVAX:
+                    this.servlet = SERVLET_JAVAX;
+                    break;
+                case SERVLET_JAKARTA:
+                    this.servlet = SERVLET_JAKARTA;
+                    break;
+                case SERVLET_RESTLITE:
+                    this.servlet = SERVLET_RESTLITE;
+                    break;
+                default:
+                    this.servlet = null;
+                    break;
+            }
+        } else {
+            this.servlet = null;
         }
     }
 
@@ -48,11 +64,6 @@ public class Configuration {
     }
 
     public boolean supportServlet() {
-        return restlite || servlet;
+        return servlet != null;
     }
-
-    public boolean supportRestLite() {
-        return restlite;
-    }
-
 }

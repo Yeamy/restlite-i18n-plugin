@@ -5,12 +5,10 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public class InterfaceFile extends AbstractFile<InterfaceMethod> implements Iterable<InterfaceMethod> {
-    private final boolean supportRestLite;
     private final HashMap<String, InterfaceMethod> map = new HashMap<>();
 
     public InterfaceFile(Configuration conf, Collection<InterfaceMethod> methods) {
         super(conf.getPackage(), conf.getInterface(), methods);
-        this.supportRestLite = conf.supportRestLite();
         methods.forEach(m -> map.put(m.name, m));
     }
 

@@ -22,11 +22,14 @@ public class ProxyFile extends AbstractFile<ProxyMethod> {
         if (pkg.length() > 0) {
             b.append("package ").append(pkg).append(";");
         }
-        if (conf.supportServlet()) {
+        if (conf.servlet == null) {
+            b.append("import java.util.HashMap;");
+        } else if (Configuration.SERVLET_JAVAX.equals(conf.servlet)) {
             b.append("import java.util.*;");
             b.append("import javax.servlet.http.HttpServletRequest;");
         } else {
-            b.append("import java.util.HashMap;");
+            b.append("import java.util.*;");
+            b.append("import jakarta.servlet.http.HttpServletRequest;");
         }
         String ifn = conf.getInterface();
         b.append("public class ").append(name).append(" implements ").append(ifn).append(" {");
@@ -72,8 +75,12 @@ public class ProxyFile extends AbstractFile<ProxyMethod> {
         if (pkg.length() > 0) {
             b.append("package ").append(pkg).append("\n");
         }
-        if (conf.supportServlet()) {
-            b.append("import javax.servlet.http.HttpServletRequest;");
+        if (conf.servlet != null) {
+            if (Configuration.SERVLET_JAVAX.equals(conf.servlet)) {
+                b.append("import javax.servlet.http.HttpServletRequest;");
+            } else {
+                b.append("import jakarta.servlet.http.HttpServletRequest;");
+            }
         }
         String ifn = conf.getInterface();
         b.append("class ").append(name).append(" : ").append(ifn).append(" {\nprivate var impl: ")

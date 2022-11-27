@@ -74,7 +74,7 @@ public class JavaMenuAction extends AbstractMenuAction {
         HashMap<String, String> map = new HashMap<>();
         readFile(build, (fn, line, key, text, from) -> map.put(key, text.substring(from).trim()));
         Configuration conf = new Configuration(pkgName, map.get("name"), map.get("proxy"), map.get("default"),
-                map.get("servlet"), map.get("restlite"));
+                map.get("servlet"));
         //default
         VirtualFile defaultVf = todos.remove(conf.getDefault().toLowerCase() + ".lang");
         if (defaultVf == null) {
