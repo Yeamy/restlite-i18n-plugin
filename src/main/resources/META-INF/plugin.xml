@@ -33,11 +33,21 @@
     <br>
   ]]></description>
     <change-notes><![CDATA[
+        <b>2.1</b><ul>
+            <li>Fix bug.</li>
+            <li>Support kotlin.</li>
+            <li>Support javax-Servlet and jakarta-Servlet.</li>
+        </ul>
         <b>2.0</b><ul>
             <li>The generated lang files is saved in the selected java package.</li>
             <li>Add icon for menu and lang file.</li>
             <li>Syntax highlighter for lang files.</li>
             <li>Less escape character, only: ##{ \\n \\r.</li>
+        </ul>
+        <b>2.1</b><ul>
+            <li>修改bug.</li>
+            <li>支持生成kotlin.</li>
+            <li>支持javax Servlet 和 jakarta Servlet.</li>
         </ul>
         <b>2.0</b><ul>
             <li>生成的lang文件直接保存在java package中。</li>
@@ -80,8 +90,5 @@
                     description="Generate Kotlin class from lang file">
             </action>
         </group>
-        <!--        <action id="addRestLiteI18nAction" class="yeamy.restlite.i18n.LangNewAction" text="Add RestLite I18n">-->
-        <!--            <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewFile"/>-->
-        <!--        </action>-->
     </actions>
 </idea-plugin>
