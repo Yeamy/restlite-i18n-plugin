@@ -126,43 +126,48 @@ public class LocateMethod extends AbstractMethod implements Iterable<Object> {
     private void appendStr(StringBuilder sb, String str) {
         sb.append('"');
         char[] cs = str.toCharArray();
-        char previous = 0;
         for (int i = 0, max = cs.length - 1; i <= max; i++) {
             char c = cs[i];
             if (c == '#') {
                 if (i + 2 < max && cs[i + 1] == '#' && cs[i + 2] == '{') {
-                    sb.append("#{");
-                    i++;
                     continue;
                 }
             } else if (c == '"') {
                 sb.append('\\');
-            } else if (previous == '\\' && c != 'n' && c != 'r') {
-                sb.append('\\');
+            } else if (c == '\\') {
+                if (i + 2 <= max && cs[i + 1] == '\\' && (cs[i + 2] == 'n' || cs[i + 2] == 'r')) {
+                    sb.append("\\\\\\\\").append(cs[i + 2]);
+                    i += 2;
+                    continue;
+                } else if (i + 1 < max && cs[i + 1] != 'n' && cs[i + 1] != 'r') {
+                    sb.append("\\");
+                }
             }
             sb.append(c);
-            previous = c;
         }
         sb.append('"');
     }
+
     private void appendKotlinStr(StringBuilder sb, String str) {
         char[] cs = str.toCharArray();
-        char previous = 0;
         for (int i = 0, max = cs.length - 1; i <= max; i++) {
             char c = cs[i];
             if (c == '#') {
                 if (i + 2 < max && cs[i + 1] == '#' && cs[i + 2] == '{') {
-                    sb.append("#{");
-                    i++;
                     continue;
                 }
             } else if (c == '"' || c == '$') {
                 sb.append('\\');
-            } else if (previous == '\\' && c != 'n' && c != 'r') {
-                sb.append('\\');
+            } else if (c == '\\') {
+                if (i + 2 <= max && cs[i + 1] == '\\' && (cs[i + 2] == 'n' || cs[i + 2] == 'r')) {
+                    sb.append("\\\\\\\\").append(cs[i + 2]);
+                    i += 2;
+                    continue;
+                } else if (i + 1 < max && cs[i + 1] != 'n' && cs[i + 1] != 'r') {
+                    sb.append("\\");
+                }
             }
             sb.append(c);
-            previous = c;
         }
     }
 

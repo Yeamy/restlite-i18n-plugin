@@ -205,6 +205,16 @@ public class LangFlexLexer implements FlexLexer {
                         state = STR_ESCAPE;
                         return LangTokenType.STRING;
                     }
+                } else if ((i - 1 >= tokenStart && buf.charAt(i - 1) == '\\')) {
+                    if (i - 1 == tokenStart) {
+                        tokenEnd = tokenStart + 1;
+                        state = STRING;
+                        return LangTokenType.STR_ESCAPE;
+                    } else {
+                        tokenEnd = i - 1;
+                        state = STR_ESCAPE;
+                        return LangTokenType.STRING;
+                    }
                 }
             }
         }
