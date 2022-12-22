@@ -16,6 +16,11 @@ This is a plugin for IntelliJ IDEA, helps you with JAVA International developmen
 4. Regenerate java class will overwrite the olds. If you delete the lang file, please delete the class by yourself.
 
 ## Version Update
+### 2.1
+- Fix bug.
+- Support kotlin.
+- Support javax-Servlet and jakarta-Servlet.
+
 ### 2.0
 - The generated lang files is saved in the selected java package.
 - Add icon for menu and lang file.

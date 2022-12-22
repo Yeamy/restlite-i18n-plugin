@@ -17,6 +17,11 @@
 4. 重生成Java类会覆盖存在旧的类，如果删除lang文件，请手动删除对应类。
 
 ## 版本升级
+### 2.1
+- 修改bug.
+- 支持生成kotlin.
+- 支持javax Servlet 和 jakarta Servlet.
+
 ### 2.0
 - 生成的lang文件直接保存在java package中。
 - 给菜单和lang文件添加图标。
