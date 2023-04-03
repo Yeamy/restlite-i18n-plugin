@@ -1,6 +1,7 @@
 package yeamy.restlite.i18n;
 
 import com.intellij.execution.ExecutionBundle;
+import com.intellij.ide.util.DirectoryChooser;
 import com.intellij.ide.util.PackageChooserDialog;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
@@ -12,28 +13,38 @@ import org.jetbrains.annotations.NotNull;
 import java.io.OutputStream;
 
 public class LangMenuAction extends AbstractMenuAction {
-    public static final String BUILD_LANG = "#RestLite i18n configuration\n\n" +
-            "#Name of real subject interface\n" +
-            "name=I18n\n\n" +
-            "#Name of the proxy class\n" +
-            "proxy=I18nProxy\n\n" +
-            "#Default language/locate(see more about http header Accept-Language: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language)\n" +
-            "default=zh-CN\n\n" +
-            "#Set if generate auto-select-method with param HttpServletRequest (class in servlet)\n" +
-            "#it may be one of(since version 2.0): none/jakarta/javax\n" +
-            "servlet=javax\n";
-    public static final String CN_LANG = "#井号开头是备注\n" +
-            "#一行生成一个方法，等号左边问方法名，等号右边为文本内容（包括空格）\n" +
-            "#参数名用#{}标注，支持类型限制如下，不填类型既无限制\n" +
-            "hello=你好#{name}，我是int#{int a}, long#{long l},short#{short b},char#{char c},float#{float f},double#{double d},string#{str s}\n" +
-            "#如果需要输出 #{ 请使用 ##{ 代替；\\前无需加转义符，除了\\n和\\r\n" +
-            "txt=转义符示例##{name} \" \\ \\b \\f \\t_\\n_\\r_\\\\n\\\\r\n";
-    public static final String EN_LANG = "# I'm remark，start with '#'\n" +
-            "# One line generate one method, method name on the left of equals sign as the text content (include space) on the right\n" +
-            "# Param name in #{}, type limit supported, as the example below; none if no limit.\n" +
-            "hello=Hello#{name},I'm string#{str s},int#{int a},long#{long l},short#{short b},char#{char c},float#{float f},double#{double d}\n" +
-            "# Typing #{ with ##{ instead; no need to add escape character for \\ except \\n,\\r\n" +
-            "txt=escape character sample_##{name} \" \\ \\b \\f \\t_\\n_\\r_\\\\n\\\\r\n";
+    public static final String BUILD_LANG = """
+            #RESTLite i18n configuration
+            
+            #Name of real subject interface
+            name=I18n
+            
+            #Name of the proxy class
+            proxy=I18nProxy
+            
+            #Default language/locate(see more about http header Accept-Language: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language)
+            default=zh-CN
+            
+            #Set if generate auto-select-method with param HttpServletRequest (class in servlet)
+            #it may be one of(since version 2.0): none/jakarta/javax
+            servlet=javax
+            """;
+    public static final String CN_LANG = """
+            #井号开头是备注
+            #一行生成一个方法，等号左边问方法名，等号右边为文本内容（包括空格）
+            #参数名用#{}标注，支持类型限制如下，不填类型既无限制
+            hello=你好#{name}，我是int#{int a}, long#{long l},short#{short b},char#{char c},float#{float f},double#{double d},string#{str s}
+            #如果需要输出 #{ 请使用 ##{ 代替；\\前无需加转义符，除了\\n和\\r
+            txt=转义符示例##{name} " \\ \\b \\f \\t \\n \\r \\\\n\\\\r
+            """;
+    public static final String EN_LANG = """
+            # I'm remark，start with '#'
+            # One line generate one method, method name on the left of equals sign as the text content (include space) on the right
+            # Param name in #{}, type limit supported, as the example below; none if no limit.
+            hello=Hello#{name},I'm string#{str s},int#{int a},long#{long l},short#{short b},char#{char c},float#{float f},double#{double d}
+            # Typing #{ with ##{ instead; no need to add escape character for \\ except \\n,\\r
+            txt=escape character sample_##{name} " \\ \\b \\f \\t \\n \\r \\\\n\\\\r
+            """;
 
     @Override
     public void action(Object req, Project project) {
@@ -44,15 +55,26 @@ public class LangMenuAction extends AbstractMenuAction {
             return;
         }
         PsiDirectory @NotNull [] ds = pkg.getDirectories();
-        if (ds.length > 0) {
-            ApplicationManager.getApplication().runWriteAction(() -> {
-                try {
-                    createLang(req, ds[0].getVirtualFile());
-                } catch (Exception ex) {
-                    showErrorDialog(ex.toString());
-                }
-            });
+        PsiDirectory select;
+        if (ds.length == 0) {
+            return;
+        } else if (ds.length == 1) {
+            select = ds[0];
+        } else {
+            DirectoryChooser chooser = new DirectoryChooser(project);
+            chooser.setTitle("More Than One Directory !");
+            chooser.fillList(ds, ds[0], project, "");
+            chooser.show();
+            select = chooser.getSelectedDirectory();
+            if (select == null) return;
         }
+        ApplicationManager.getApplication().runWriteAction(() -> {
+            try {
+                createLang(req, select.getVirtualFile());
+            } catch (Exception ex) {
+                showErrorDialog(ex.toString());
+            }
+        });
     }
 
     public static void createLang(Object req, VirtualFile i18n) throws Exception {

@@ -21,18 +21,22 @@
     通过简单的自定义文件生成多语言Java类，所有词条通过方法获取，而非Map+String.format形式。<br>
     希望它对你有用。<br>
     <b>How to use:</b><br>
-    <b>1.</b> Generate *.lang file for your project/module: Tools → RestLite I18n → Generate Lang File<br>
+    <b>1.</b> Generate *.lang file for your project/module: Tools → RESTLite i18n → Generate Lang File<br>
     <b>2.</b> Add and modify your lang files, the syntax of lang-file are all in the sample file.<br>
-    <b>3.</b> Generate *.java class by lang file: Tools → RestLite I18n → Generate Java Class<br>
+    <b>3.</b> Generate *.java class by lang file: Tools → RESTLite i18n → Generate Java Class<br>
     <b>4.</b> Regenerate java class will overwrite the olds. If you delete the lang file, please delete the class by yourself.<br>
     <b>如何使用：</b><br>
-    <b>1、</b>为你的项目生成lang文件: Tools → RestLite I18n → Generate Lang File<br>
+    <b>1、</b>为你的项目生成lang文件: Tools → RESTLite i18n → Generate Lang File<br>
     <b>2、</b>添加并修改lang文件，lang文件的语法都在示例文件中。<br>
-    <b>3、</b>根据lang文件生成java类: Tools → RestLite I18n → Generate Java Class<br>
+    <b>3、</b>根据lang文件生成java类: Tools → RESTLite i18n → Generate Java Class<br>
     <b>4、</b>重生成Java类会覆盖存在旧的类，如果删除lang文件，请手动删除对应类。<br>
     <br>
   ]]></description>
     <change-notes><![CDATA[
+        <b>2.2</b><ul>
+            <li>Support IDEA 2023.</li>
+            <li>Show choose dialog when the package exists more than one directory.</li>
+        </ul>
         <b>2.1</b><ul>
             <li>Fix bug.</li>
             <li>Support kotlin.</li>
@@ -43,6 +47,11 @@
             <li>Add icon for menu and lang file.</li>
             <li>Syntax highlighter for lang files.</li>
             <li>Less escape character, only: ##{ \\n \\r.</li>
+        </ul>
+        <b>-------------------------------------</b><br>
+        <b>2.2</b><ul>
+            <li>支持新版本IDEA 2023.</li>
+            <li>当同个包名存在多个目录时弹出选择框.</li>
         </ul>
         <b>2.1</b><ul>
             <li>修改bug.</li>
