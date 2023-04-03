@@ -27,10 +27,10 @@ public abstract class AbstractMenuAction extends AnAction {
     protected abstract void action(Object req, Project project) throws Exception;
 
     public static void showDialog(String message) {
-        ApplicationManager.getApplication().invokeLater(() -> Messages.showInfoMessage(message, "RestLite I18n"));
+        ApplicationManager.getApplication().invokeLater(() -> Messages.showInfoMessage(message, "RESTLite i18n"));
     }
 
     public static void showErrorDialog(String message) {
-        ApplicationManager.getApplication().invokeLater(() -> Messages.showInfoMessage(message, "RestLite I18n Error"));
+        ApplicationManager.getApplication().invokeLater(() -> Messages.showInfoMessage(message, "RESTLite i18n Error"));
     }
 }

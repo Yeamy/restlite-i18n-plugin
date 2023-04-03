@@ -1,4 +1,4 @@
-# RestLite i18n Plugin for IntelliJ IDEA
+# RESTLite i18n Plugin for IntelliJ IDEA
 [![](https://img.shields.io/github/license/Yeamy/restlite-i18n-plugin)](https://github.com/Yeamy/restlite-i18n-plugin/blob/master/LICENSE) [![](https://img.shields.io/badge/market-jetbrains-black)](https://plugins.jetbrains.com/plugin/20268-restlite-i18n)  
 [English](README.md) | 中文
 
@@ -11,9 +11,9 @@
 3. 可以通过HttpServletRequest自动选择委托类。
 
 ## 如何使用
-1. 为你的module生成lang示例文件：Tools → RestLite I18n → Generate Lang File
+1. 为你的module生成lang示例文件：Tools → RESTLite i18n → Generate Lang File
 2. 添加/修改lang文件，lang文件的语法都在示例文件中。
-3. 根据lang文件生成java类: Tools → RestLite I18n → Generate Java Class
+3. 根据lang文件生成java类: Tools → RESTLite i18n → Generate Java Class
 4. 重生成Java类会覆盖存在旧的类，如果删除lang文件，请手动删除对应类。
 
 ## 版本升级
