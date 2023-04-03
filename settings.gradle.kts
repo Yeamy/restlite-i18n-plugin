@@ -1,1 +1,1 @@
-rootProject.name = "i18n"
+rootProject.name = "restlite-i18n-plugin"
