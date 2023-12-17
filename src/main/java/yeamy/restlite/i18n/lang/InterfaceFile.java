@@ -1,5 +1,7 @@
 package yeamy.restlite.i18n.lang;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,7 +15,7 @@ public class InterfaceFile extends AbstractFile<InterfaceMethod> implements Iter
     }
 
     @Override
-    public Iterator<InterfaceMethod> iterator() {
+    public @NotNull Iterator<InterfaceMethod> iterator() {
         return methods.iterator();
     }
 

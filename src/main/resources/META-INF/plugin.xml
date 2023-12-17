@@ -82,6 +82,12 @@
         <lang.syntaxHighlighterFactory language="Lang"
                                        implementationClass="yeamy.restlite.i18n.edit.LangSyntaxHighlighterFactory"/>
     </extensions>
+    <extensionPoints>
+        <extensionPoint name="com.intellij.fileType" beanClass="com.intellij.lang.LanguageExtensionPoint">
+            <with attribute="implementationClass" implements="com.intellij.psi.LanguageSubstitutor"/>
+        </extensionPoint>
+
+    </extensionPoints>
     <actions>
         <group id="yeamy.restlite" text="RESTLite i18n" description="Generate i18n file for java" popup="true"
                icon="/icons/menu.svg">

@@ -9,24 +9,16 @@ public class Param {
     }
 
     public String kotlinType() {
-        switch (type) {
-            case "int":
-                return "Int";
-            case "long":
-                return "Long";
-            case "short":
-                return "Short";
-            case "char":
-                return "Char";
-            case "float":
-                return "Float";
-            case "double":
-                return "Double";
-            case "String":
-                return type;
-            default:
-                return "Any";
-        }
+        return switch (type) {
+            case "int" -> "Int";
+            case "long" -> "Long";
+            case "short" -> "Short";
+            case "char" -> "Char";
+            case "float" -> "Float";
+            case "double" -> "Double";
+            case "String" -> type;
+            default -> "Any";
+        };
     }
 
     @Override
@@ -77,21 +69,11 @@ public class Param {
         }
         String type;
         String str = text.substring(s, m);
-        switch (str) {
-            case "str":
-                type = "String";
-                break;
-            case "double":
-            case "float":
-            case "long":
-            case "int":
-            case "short":
-            case "char":
-                type = str;
-                break;
-            default:
-                type = null;
-        }
+        type = switch (str) {
+            case "str" -> "String";
+            case "double", "float", "long", "int", "short", "char" -> str;
+            default -> null;
+        };
         while (true) {
             char c = text.charAt(m);
             if (c != ' ' && c != '\t') {

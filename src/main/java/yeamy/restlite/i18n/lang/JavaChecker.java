@@ -9,10 +9,12 @@ public class JavaChecker {
 
     static {
         String[] kws = {
-                "package", "public", "protected", "private", "static", "abstract", "final", "class", "interface",
-                "implements", "extends", "enum", "assert", "transient", "null", "try", "catch", "finally", "throw",
-                "throws", "if", "else", "switch", "case", "default", "break", "return", "byte", "char", "short", "int",
-                "long", "float", "double"};
+                "abstract", "assert", "boolean", "break", "byte", "case", "catch", "char", "class", "const", "continue",
+                "default", "do", "double", "else", "enum", "extends", "final", "finally", "float", "for", "goto", "if",
+                "implements", "import", "instanceof", "int", "interface", "long", "native", "new", "null", "package",
+                "private", "protected", "public", "record", "return", "strictfp", "short", "static", "super", "switch",
+                "synchronized", "this", "throw", "throws", "transient", "try", "void", "volatile", "while"
+        };
         KEY_WORDS.addAll(Arrays.asList(kws));
     }
 
