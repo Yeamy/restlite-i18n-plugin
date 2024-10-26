@@ -15,19 +15,7 @@ public abstract class AbstractFile<T extends AbstractMethod> {
         this.methods = methods;
     }
 
-    public final void createJavaSource(OutputStream os) throws IOException {
-        String code = createJavaSource();
-        os.write(code.getBytes());
-        os.flush();
-    }
+    public abstract String javaSource();
 
-    protected abstract String createJavaSource();
-
-    public final void createKotlinSource(OutputStream os) throws IOException {
-        String code = createKotlinSource();
-        os.write(code.getBytes());
-        os.flush();
-    }
-
-    protected abstract String createKotlinSource();
+    public abstract String kotlinSource();
 }

@@ -20,7 +20,7 @@ public class InterfaceFile extends AbstractFile<InterfaceMethod> implements Iter
     }
 
     @Override
-    protected String createJavaSource() {
+    public String javaSource() {
         StringBuilder b = new StringBuilder();
         if (pkg.length() > 0) {
             b.append("package ").append(pkg).append(";");
@@ -39,7 +39,7 @@ public class InterfaceFile extends AbstractFile<InterfaceMethod> implements Iter
     }
 
     @Override
-    protected String createKotlinSource() {
+    public String kotlinSource() {
         StringBuilder b = new StringBuilder();
         if (pkg.length() > 0) {
             b.append("package ").append(pkg).append('\n');

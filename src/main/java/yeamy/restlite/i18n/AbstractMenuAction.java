@@ -17,20 +17,16 @@ public abstract class AbstractMenuAction extends AnAction {
             showErrorDialog("Cannot get project");
             return;
         }
-        try {
-            action(e, project);
-        } catch (Exception ex) {
-            showErrorDialog(ex.toString());
-        }
+        ApplicationManager.getApplication().runWriteAction(() -> action(e, project));
     }
 
-    protected abstract void action(Object req, Project project) throws Exception;
+    protected abstract void action(Object req, Project project);
 
-    public static void showDialog(String message) {
+    public static void showInfoDialog(String message) {
         ApplicationManager.getApplication().invokeLater(() -> Messages.showInfoMessage(message, "RESTLite i18n"));
     }
 
     public static void showErrorDialog(String message) {
-        ApplicationManager.getApplication().invokeLater(() -> Messages.showInfoMessage(message, "RESTLite i18n Error"));
+        ApplicationManager.getApplication().invokeLater(() -> Messages.showErrorDialog(message, "RESTLite i18n Error"));
     }
 }

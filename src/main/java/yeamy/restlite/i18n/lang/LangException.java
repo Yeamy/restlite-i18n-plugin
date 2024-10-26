@@ -9,4 +9,9 @@ public class LangException extends Exception {
     public LangException(String message) {
         super(message);
     }
+
+    @Override
+    public String toString() {
+        return getMessage();
+    }
 }

@@ -15,10 +15,10 @@
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
     This plugin helps you with <b>JAVA International</b> development.<br>
-    Create simple customization files and generate java class with it. All words obtained through methods rather than string format.<br>
-    Wish it work for you.<br>
+    Create simple customization files and generate java/kotlin class with it. All words obtained through methods rather than string format.<br>
+    Wish it useful for you.<br>
     该插件可以帮助你轻松实现<b>JAVA国际化</b>开发。<br>
-    通过简单的自定义文件生成多语言Java类，所有词条通过方法获取，而非Map+String.format形式。<br>
+    通过简单的自定义文件生成多语言Java/Kotlin类，所有词条通过方法获取，而非Map<> + String.format形式。<br>
     希望它对你有用。<br>
     <b>How to use:</b><br>
     <b>1.</b> Generate *.lang file for your project/module: Tools → RESTLite i18n → Generate Lang File<br>
@@ -33,6 +33,9 @@
     <br>
   ]]></description>
     <change-notes><![CDATA[
+        <b>2.2.3</b><ul>
+            <li>Support IDEA 2024.</li>
+        </ul>
         <b>2.2</b><ul>
             <li>Support IDEA 2023.</li>
             <li>Show choose dialog when the package exists more than one directory.</li>
@@ -49,6 +52,9 @@
             <li>Less escape character, only: ##{ \\n \\r.</li>
         </ul>
         <b>-------------------------------------</b><br>
+        <b>2.2.3</b><ul>
+            <li>支持新版本IDEA 2024.</li>
+        </ul>
         <b>2.2</b><ul>
             <li>支持新版本IDEA 2023.</li>
             <li>当同个包名存在多个目录时弹出选择框.</li>
@@ -92,7 +98,7 @@
         <group id="yeamy.restlite" text="RESTLite i18n" description="Generate i18n file for java" popup="true"
                icon="/icons/menu.svg">
             <add-to-group group-id="ToolsMenu" anchor="last"/>
-            <action id="yeamy.restlite.i18n.LangMenuAction" class="yeamy.restlite.i18n.LangMenuAction"
+            <action id="yeamy.restlite.i18n.TemplateMenuAction" class="yeamy.restlite.i18n.TemplateMenuAction"
                     text="Generate Lang File"
                     description="Generate sample file of RESTLite i18n">
             </action>
