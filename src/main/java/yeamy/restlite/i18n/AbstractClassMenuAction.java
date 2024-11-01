@@ -25,7 +25,7 @@ public abstract class AbstractClassMenuAction extends AbstractMenuAction {
         }
     }
 
-    private void findPackage(Object req, Project project) throws Exception {
+    private void findPackage(Object req, Project project) throws LangException {
         VirtualFile @NotNull [] src = ProjectRootManager.getInstance(project).getContentSourceRoots();
         String[] ps = new String[src.length];
         for (int i = 0; i < src.length; i++) {
@@ -34,7 +34,7 @@ public abstract class AbstractClassMenuAction extends AbstractMenuAction {
         @NotNull Collection<VirtualFile> fs = FilenameIndex.getVirtualFilesByName(BUILD_FILE,
                 GlobalSearchScope.projectScope(project));
         if (fs.isEmpty()) {
-            throw new LangException(ExecutionBundle.message("file.not.found.0", "build.lang"));
+            throw new LangException(ExecutionBundle.message("script.exception.file.not.found", "build.lang"));
         }
         for (VirtualFile f : fs) {
             VirtualFile pkg = f.getParent();
@@ -51,7 +51,7 @@ public abstract class AbstractClassMenuAction extends AbstractMenuAction {
         }
     }
 
-    protected void createPackageFile(Object req, VirtualFile pkg, String pkgName) throws Exception {
+    protected void createPackageFile(Object req, VirtualFile pkg, String pkgName) throws LangException {
         HashMap<String, VirtualFile> todos = new HashMap<>();
         VirtualFile[] fs = pkg.getChildren();
         //config
