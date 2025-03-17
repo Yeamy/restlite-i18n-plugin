@@ -33,8 +33,8 @@
     <br>
   ]]></description>
     <change-notes><![CDATA[
-        <b>2.2.3</b><ul>
-            <li>Support IDEA 2024.</li>
+        <b>2.2.4</b><ul>
+            <li>Support IDEA.</li>
         </ul>
         <b>2.2</b><ul>
             <li>Support IDEA 2023.</li>
@@ -52,8 +52,8 @@
             <li>Less escape character, only: ##{ \\n \\r.</li>
         </ul>
         <b>-------------------------------------</b><br>
-        <b>2.2.3</b><ul>
-            <li>支持新版本IDEA 2024.</li>
+        <b>2.2.4</b><ul>
+            <li>支持新版本IDEA.</li>
         </ul>
         <b>2.2</b><ul>
             <li>支持新版本IDEA 2023.</li>
