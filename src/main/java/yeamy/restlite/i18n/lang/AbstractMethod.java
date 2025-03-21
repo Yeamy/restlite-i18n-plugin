@@ -1,27 +1,22 @@
 package yeamy.restlite.i18n.lang;
 
-import java.util.Collection;
 import java.util.LinkedHashMap;
+import java.util.Set;
 
 public abstract class AbstractMethod {
-	public final String name;
-	protected final LinkedHashMap<String, Param> params;
+    public final String name;
+    protected final LinkedHashMap<String, Param> params;
 
-	protected AbstractMethod(String name, LinkedHashMap<String, Param> params) {
-		this.name = name;
-		this.params = params;
-	}
+    protected AbstractMethod(String name, LinkedHashMap<String, Param> params) {
+        this.name = name;
+        this.params = params;
+    }
 
-	public Collection<Param> params() {
-		return params.values();
-	}
+    abstract void createSource(StringBuilder b);
 
-	public Param get(String name) {
-		return params.get(name);
-	}
+    public String name() {
+        return name;
+    }
 
-	abstract void createJavaSource(StringBuilder b);
-
-	abstract void createKotlinSource(StringBuilder b);
-
+    public abstract Set<String> imports();
 }

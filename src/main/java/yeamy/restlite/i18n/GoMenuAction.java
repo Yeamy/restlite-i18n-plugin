@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 
-public abstract class AbstractClassMenuAction extends AbstractMenuAction {
+public class GoMenuAction extends AbstractMenuAction {
 
     @Override
     public void action(Object e, Project project) {
@@ -26,7 +26,7 @@ public abstract class AbstractClassMenuAction extends AbstractMenuAction {
     }
 
     private void findPackage(Object req, Project project) throws LangException {
-        VirtualFile @NotNull [] src = ProjectRootManager.getInstance(project).getContentSourceRoots();
+        VirtualFile @NotNull [] src = ProjectRootManager.getInstance(project).getContentRoots();
         String[] ps = new String[src.length];
         for (int i = 0; i < src.length; i++) {
             ps[i] = src[i].getPath();
@@ -37,23 +37,20 @@ public abstract class AbstractClassMenuAction extends AbstractMenuAction {
             throw new LangException(ExecutionBundle.message("script.exception.file.not.found", "build.lang"));
         }
         for (VirtualFile f : fs) {
-            VirtualFile pkg = f.getParent();
-            String mp = pkg.getPath();
+            VirtualFile dir = f.getParent();
+            String mp = dir.getPath();
             for (String p : ps) {
                 if (mp.startsWith(p)) {
-                    String pkgName = mp.length() > p.length()
-                            ? mp.substring(p.length() + 1).replace("/", ".")
-                            : "";
-                    createPackageFile(req, pkg, pkgName);
+                    createPackageFile(req, dir);
                     break;
                 }
             }
         }
     }
 
-    protected void createPackageFile(Object req, VirtualFile pkg, String pkgName) throws LangException {
+    protected void createPackageFile(Object req, VirtualFile dir) throws LangException {
         HashMap<String, VirtualFile> todos = new HashMap<>();
-        VirtualFile[] fs = pkg.getChildren();
+        VirtualFile[] fs = dir.getChildren();
         //config
         VirtualFile build = null;
         for (VirtualFile f : fs) {
@@ -75,75 +72,55 @@ public abstract class AbstractClassMenuAction extends AbstractMenuAction {
         HashMap<String, String> map = new HashMap<>();
         assert build != null;
         readFile(build, (fn, line, key, text, from) -> map.put(key, text.substring(from).trim()));
-        Configuration conf = new Configuration(pkgName, map.get("name"), map.get("proxy"), map.get("default"),
-                map.get("servlet"));
+        Configuration conf = new Configuration(map.get("package"), map.get("file"), map.get("default"), map.get("http"));
         //default
         VirtualFile defaultVf = todos.remove(conf.getDefault().toLowerCase() + ".lang");
         if (defaultVf == null) {
-            throw new LangException("Configuration file not exists");
+            throw new LangException("file \"" + conf.getDefault() + ".lang\" not exists");
         }
-        ArrayList<LocateMethod> dms = new ArrayList<>();
-        readFile(defaultVf, (fn, line, key, text, from)
-                -> dms.add(new LocateMethod(key, fn, line, text, from)));
-        LocateFile dlf = new LocateFile(conf, conf.getDefault(), dms);
-        ArrayList<AbstractFile<?>> writeFiles = new ArrayList<>();
-        writeFiles.add(dlf);
-        // interface
-        ArrayList<InterfaceMethod> ims = new ArrayList<>(dms.size());
-        dms.forEach(m -> ims.add(InterfaceMethod.create(m)));
-        InterfaceFile iff = new InterfaceFile(conf, ims);
-        writeFiles.add(iff);
+        ArrayList<LocateMethod> methods = new ArrayList<>();
+        readFile(defaultVf, (fileName, line, key, text, from)
+                -> methods.add(new LocateMethod(conf.getDefault(), key, fileName, line, text, from)));
+        // output
+        OutputFile file = new OutputFile(conf, methods);
         // locate
-        ArrayList<LocateFile> lfs = new ArrayList<>();
-        lfs.add(dlf);
         for (VirtualFile f : todos.values()) {
-            ArrayList<LocateMethod> lms = new ArrayList<>();
-            readFile(f, (fn, line, key, text, from) -> {
-                InterfaceMethod ifm = iff.get(key);
-                if (ifm == null) {
+            String locate = getLocate(f);
+            readFile(f, (fileName, line, key, text, from) -> {
+                OutputMethod method = file.getMethod(key);
+                if (method == null) {
                     throw new LangException("Undefined method \"" + key + "\" in file " + f.getName());
                 }
-                lms.add(new LocateMethod(ifm, fn, line, text, from));
+                file.add(new LocateMethod(locate, key, fileName, line, text, from));
             });
-            String locate = getLocate(f);
-            LocateFile lf = new LocateFile(conf, locate, lms);
-            lfs.add(lf);
-            writeFiles.add(lf);
         }
-        // proxy
-        ArrayList<ProxyMethod> pms = new ArrayList<>();
-        ims.forEach(m -> pms.add(new ProxyMethod(m)));
-        writeFiles.add(new ProxyFile(conf, pms, lfs, dlf));
-        // write
-        for (AbstractFile<?> f : writeFiles) {
-            createClassFile(req, pkg, f);
-        }
+        createSourceFile(req, dir, file);
     }
 
-    protected void createClassFile(Object req, VirtualFile pkg, AbstractFile<?> f) throws LangException {
-        String fileName = f.name + fileExtension();
+    protected void createSourceFile(Object req, VirtualFile dir, OutputFile f) throws LangException {
+        String fileName = f.fileName();
 
-        VirtualFile vf = pkg.findChild(fileName);
+        VirtualFile vf = dir.findChild(fileName);
         if (vf != null) {
             try {
                 vf.delete(req);
             } catch (IOException ex) {
                 ex.printStackTrace();
-                throw new LangException("Fail to update class " + f.name);
+                throw new LangException("Fail to update file " + fileName);
             }
         }
         try {
-            vf = pkg.createChildData(req, fileName);
+            vf = dir.createChildData(req, fileName);
         } catch (IOException ex) {
             ex.printStackTrace();
-            throw new LangException("Fail to create class " + f.name);
+            throw new LangException("Fail to create file " + fileName);
         }
         try (OutputStream os = vf.getOutputStream(req)) {
-            os.write(getFileData(f));
+            os.write(f.createSource().getBytes());
             os.flush();
         } catch (IOException ex) {
             ex.printStackTrace();
-            throw new LangException("Fail to create class " + f.name);
+            throw new LangException("Fail to create file " + fileName);
         }
     }
 
@@ -153,18 +130,14 @@ public abstract class AbstractClassMenuAction extends AbstractMenuAction {
     }
 
     protected static void readFile(VirtualFile vf, LineReader r) throws LangException {
-        String fn = vf.getName();
+        String fileName = vf.getName();
         try (InputStream is = vf.getInputStream();
              BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
-            LineReader.readFile(fn, reader, r);
+            LineReader.readFile(fileName, reader, r);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new LangException("IO error while reading file " + fn);
+            throw new LangException("IO error while reading file " + fileName);
         }
     }
-
-    protected abstract String fileExtension();
-
-    protected abstract byte[] getFileData(AbstractFile<?> f);
 
 }
