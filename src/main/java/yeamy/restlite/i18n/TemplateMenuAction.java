@@ -16,9 +16,10 @@ import java.util.ArrayList;
 public class TemplateMenuAction extends AbstractMenuAction {
     public static final String BUILD_LANG = """
             #RESTLite i18n configuration
+            language=go
             
             #Name of package
-            package=main
+            package=i18n
             
             #Name of source file
             file=i18n.go

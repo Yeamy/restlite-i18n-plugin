@@ -72,6 +72,9 @@ public class GoMenuAction extends AbstractMenuAction {
         HashMap<String, String> map = new HashMap<>();
         assert build != null;
         readFile(build, (fn, line, key, text, from) -> map.put(key, text.substring(from).trim()));
+        if (!"go".equals(map.get("language"))) {
+            return;
+        }
         Configuration conf = new Configuration(map.get("package"), map.get("file"), map.get("default"), map.get("http"));
         //default
         VirtualFile defaultVf = todos.remove(conf.getDefault().toLowerCase() + ".lang");
