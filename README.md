@@ -2,36 +2,23 @@
 [![](https://img.shields.io/github/license/Yeamy/restlite-i18n-plugin)](https://github.com/Yeamy/restlite-i18n-plugin/blob/master/LICENSE) [![](https://img.shields.io/badge/market-jetbrains-black)](https://plugins.jetbrains.com/plugin/20268-restlite-i18n)  
 English | [中文](README-CN.md)
 
-This is a plugin for IntelliJ IDEA, helps you with JAVA International development.
+This is a plugin for IntelliJ IDEA, helps you with GO `International` development.
+Generate Go source code through simple custom files and use method calls to obtain sentence;
 
 ### What's different
-1. All words generate by methods rather than using Map and String.format;
+1. All sentences generate by methods rather than using Map and String.format;
 2. Parameter supported, type limit supported，No order restriction for parameters;
-3. Automatically select delegate class by HttpServletRequest.
 
 ### How to use
-1. Generate lang sample file for your module: Tools → RESTLite i18n → Generate Lang File
+1. Generate lang sample file for your module: Tools → RESTLite i18n → Generate Go Lang File
 2. Add/Modify your lang files, All Syntax of lang-file are all in the sample file.
-3. Generate java class from lang file: Tools → RESTLite i18n → Generate Java Class
-4. Regenerate java class will overwrite the olds. If you delete the lang file, please delete the class by yourself.
+3. Generate go source file from lang file: Tools → RESTLite i18n → Generate Go Source
+4. Regenerate go source file will overwrite the olds. If you delete the lang file, please delete the source file  by yourself.
 
 ## Version Update
-### 2.1
-- Fix bug.
-- Support kotlin.
-- Support javax-Servlet and jakarta-Servlet.
-
-### 2.0
-- The generated lang files is saved in the selected java package.
-- Add icon for menu and lang file.
-- Syntax highlighter for lang files.
-- Less escape character, only: ##{, \\n and \\r.
-### 1.1
-- Less escape character: typing #{ with ##{ instead; ~~no need to add escape character for " nor \ unless \b, \t, \n, \f, \r, \\ appear.~~
-
-## Update Plan
-- Compile lang file to class.(PS: IDEA doc not complete yet)
-- ~~Syntax highlighter.(done)~~
+### 1.0
+- transplant the plugin from java to go
+- support go build-in type
 
 ### At Last
 Welcome to commit bug / new feature.

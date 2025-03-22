@@ -26,12 +26,12 @@
                icon="/icons/menu.svg">
             <add-to-group group-id="ToolsMenu" anchor="last"/>
             <action id="yeamy.restlite.i18n.TemplateMenuAction" class="yeamy.restlite.i18n.TemplateMenuAction"
-                    text="Generate Lang File"
-                    description="Generate sample file of RESTLite i18n">
+                    text="Generate Go Lang File"
+                    description="Generate sample file of RESTLite i18n go version">
             </action>
             <action id="yeamy.restlite.i18n.GoAction" class="yeamy.restlite.i18n.GoMenuAction"
                     text="Generate Go Source"
-                    description="Generate go class from lang file">
+                    description="Generate go source file from lang file">
             </action>
         </group>
     </actions>

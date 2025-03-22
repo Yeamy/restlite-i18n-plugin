@@ -56,7 +56,7 @@ public class LocateMethod extends AbstractMethod {
         b.append("    case \"").append(locate).append("\":\n");
         if (data.size() == 1) {
             b.append("        return ");
-            data.getFirst().createSource(b);
+            data.get(0).createSource(b);
             b.append("\n");
         } else {
             for (Component li : data) {

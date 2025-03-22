@@ -21,11 +21,11 @@ public class OutputMethod extends AbstractMethod {
             b.delete(b.length() - 2, b.length());
             b.append(") string {\n    var _b strings.Builder\n    switch lang {\n");
             methods.forEach(m -> m.createSource(b));
-            b.append("    }\n    return _b.String()\n}");
+            b.append("    }\n    return _b.String()\n}\n");
         } else {
             b.append("(lang string) string {\n    switch lang {\n");
             methods.forEach(m -> m.createSource(b));
-            b.append("    }\n    return \"\"\n}");
+            b.append("    }\n    return \"\"\n}\n");
         }
     }
 
