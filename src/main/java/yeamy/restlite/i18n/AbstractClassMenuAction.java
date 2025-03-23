@@ -75,6 +75,10 @@ public abstract class AbstractClassMenuAction extends AbstractMenuAction {
         HashMap<String, String> map = new HashMap<>();
         assert build != null;
         readFile(build, (fn, line, key, text, from) -> map.put(key, text.substring(from).trim()));
+        String language = map.get("language");
+        if (language == null || language.isEmpty() || language.equals("java")) {
+            return;
+        }
         Configuration conf = new Configuration(pkgName, map.get("name"), map.get("proxy"), map.get("default"),
                 map.get("servlet"));
         //default

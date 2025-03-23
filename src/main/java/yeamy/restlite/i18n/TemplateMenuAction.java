@@ -15,6 +15,7 @@ import java.io.OutputStream;
 public class TemplateMenuAction extends AbstractMenuAction {
     public static final String BUILD_LANG = """
             #RESTLite i18n configuration
+            language=java
             
             #Name of real subject interface
             name=I18n
