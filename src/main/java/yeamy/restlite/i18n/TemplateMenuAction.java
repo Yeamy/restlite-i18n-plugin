@@ -1,17 +1,10 @@
 package yeamy.restlite.i18n;
 
-import com.intellij.ide.util.DirectoryChooser;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.roots.ProjectRootManager;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiDirectory;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.impl.file.PsiDirectoryFactory;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.OutputStream;
-import java.util.ArrayList;
 
 public class TemplateMenuAction extends AbstractMenuAction {
     public static final String BUILD_LANG = """
@@ -55,37 +48,14 @@ public class TemplateMenuAction extends AbstractMenuAction {
         ApplicationManager.getApplication().invokeLater(() -> choosePackage(e, project));
     }
 
-    private void addChildDir(ArrayList<PsiDirectory> list, @NotNull PsiDirectory dir) {
-        for (PsiElement e : dir.getChildren()) {
-            if (e instanceof PsiDirectory) {
-                PsiDirectory d = (PsiDirectory) e;
-                if (d.getName().charAt(0) != '.') {
-                    list.add(d);
-                    addChildDir(list, d);
-                }
-            }
-        }
-    }
-
     public void choosePackage(Object req, Project project) {
-        VirtualFile @NotNull [] roots = ProjectRootManager.getInstance(project).getContentRoots();
-        PsiDirectoryFactory factory = PsiDirectoryFactory.getInstance(project);
-        DirectoryChooser dialog = new DirectoryChooser(project);
-        ArrayList<PsiDirectory> list = new ArrayList<>();
-        for (VirtualFile dir : roots) {
-            PsiDirectory root = factory.createDirectory(dir);
-            list.add(root);
-            addChildDir(list, root);
-            PsiDirectory[] dirs = new PsiDirectory[list.size()];
-            dialog.fillList(list.toArray(dirs), root, project, (String) null);
-        }
-
+        DirectoryChooserDialog dialog = new DirectoryChooserDialog("", project);
         if (dialog.showAndGet()) {
-            PsiDirectory dir = dialog.getSelectedDirectory();
+            VirtualFile dir = dialog.getSelectedDirectory();
             ApplicationManager.getApplication().runWriteAction(() -> {
                 try {
                     assert dir != null;
-                    writeTemplateFile(req, dir.getVirtualFile());
+                    writeTemplateFile(req, dir);
                 } catch (Exception ex) {
                     showErrorDialog(ex.toString());
                 }

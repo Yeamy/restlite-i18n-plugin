@@ -1,7 +1,7 @@
 plugins {
     id("java")
     id("org.jetbrains.intellij.platform") version "2.3.0"
-    id("org.jetbrains.intellij.platform.migration") version "2.3.0"
+//    id("org.jetbrains.intellij.platform.migration") version "2.3.0"
 }
 
 repositories {
@@ -20,7 +20,7 @@ intellijPlatform {
     pluginConfiguration {
         id = "yeamy.restlite.i18n.go"
         name = "RESTLite i18n"
-        version = "1.0"
+        version = "1.0.1"
         description = """
     · This plugin helps you with Go <b>International</b> development.<br>
     · Create simple customization files and generate go source file with it. All sentences obtained through methods.<br>
@@ -41,7 +41,11 @@ intellijPlatform {
     <b>4、</b>重生成Go源码会覆盖存在旧的源码文件，如果删除lang文件，请手动删除对应源码文件。<br>
     <br>
         """.trimIndent()
-        changeNotes = ""
+        changeNotes = """
+    <b>1.0.1</b><ul>
+        <li>New tree Directory Picker Dialog.</li>
+    </ul>
+        """.trimIndent()
 
         ideaVersion {
             sinceBuild = "223"

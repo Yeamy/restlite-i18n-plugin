@@ -1,5 +1,5 @@
 # RESTLite i18n Plugin for IntelliJ IDEA
-[![](https://img.shields.io/github/license/Yeamy/restlite-i18n-plugin)](https://github.com/Yeamy/restlite-i18n-plugin/blob/master/LICENSE) [![](https://img.shields.io/badge/market-jetbrains-black)](https://plugins.jetbrains.com/plugin/20268-restlite-i18n)  
+[![](https://img.shields.io/github/license/Yeamy/restlite-i18n-plugin)](https://github.com/Yeamy/restlite-i18n-plugin/blob/master/LICENSE) [![](https://img.shields.io/badge/market-jetbrains-black)](https://plugins.jetbrains.com/plugin/26895-restlite-i18n)  
 English | [中文](README-CN.md)
 
 This is a plugin for IntelliJ IDEA, helps you with GO `International` development.
@@ -19,6 +19,8 @@ Generate Go source code through simple custom files and use method calls to obta
 ### 1.0
 - transplant the plugin from java to go
 - support go build-in type
+### 1.0
+- new tree directory picker.
 
 ### At Last
 Welcome to commit bug / new feature.

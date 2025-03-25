@@ -1,5 +1,5 @@
 # RESTLite i18n Plugin for IntelliJ IDEA
-[![](https://img.shields.io/github/license/Yeamy/restlite-i18n-plugin)](https://github.com/Yeamy/restlite-i18n-plugin/blob/master/LICENSE) [![](https://img.shields.io/badge/market-jetbrains-black)](https://plugins.jetbrains.com/plugin/20268-restlite-i18n)  
+[![](https://img.shields.io/github/license/Yeamy/restlite-i18n-plugin)](https://github.com/Yeamy/restlite-i18n-plugin/blob/master/LICENSE) [![](https://img.shields.io/badge/market-jetbrains-black)](https://plugins.jetbrains.com/plugin/26895-restlite-i18n)  
 [English](README.md) | 中文
 
 这是一款 IntelliJ IDEA 的插件，帮助你轻松实现Go`国际化`开发。  
@@ -19,6 +19,8 @@
 ### 1.0
 - 将插件从java版移植到go语言版本
 - 支持go内置类型
+### 1.0.1
+- 升级生成lang模板文件的目录选择器
 
 ## 最后
 如果有bug请提交issue，我会尽快修复；
