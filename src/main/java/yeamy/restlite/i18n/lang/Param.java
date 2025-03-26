@@ -1,6 +1,6 @@
 package yeamy.restlite.i18n.lang;
 
-public class Param implements Component{
+public class Param implements Component {
     public final String type, name;
 
     private Param(String type, String name) {
@@ -20,6 +20,16 @@ public class Param implements Component{
             case "String" -> type;
             default -> "Any";
         };
+    }
+
+    @Override
+    public void createJavaSource(StringBuilder b) {
+        b.append(name);
+    }
+
+    @Override
+    public void createKotlinSource(StringBuilder b) {
+        b.append('$').append(name);
     }
 
     @Override
@@ -68,9 +78,8 @@ public class Param implements Component{
         if (m == e) {
             return new Param("Object", text.substring(s, e));
         }
-        String type;
         String str = text.substring(s, m);
-        type = switch (str) {
+        String type = switch (str) {
             case "str" -> "String";
             case "bool" -> "boolean";
             case "double", "float", "long", "int", "short", "char" -> str;

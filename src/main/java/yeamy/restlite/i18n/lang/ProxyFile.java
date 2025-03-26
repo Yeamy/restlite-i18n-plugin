@@ -25,11 +25,17 @@ public class ProxyFile extends AbstractFile<ProxyMethod> {
         if (conf.servlet == null) {
             b.append("import java.util.HashMap;");
         } else if (Configuration.SERVLET_JAVAX.equals(conf.servlet)) {
-            b.append("import java.util.*;");
-            b.append("import javax.servlet.http.HttpServletRequest;");
+            b.append("""
+                    import javax.servlet.http.HttpServletRequest;
+                    import java.util.ArrayList;
+                    import java.util.HashMap;
+                    """);
         } else {
-            b.append("import java.util.*;");
-            b.append("import jakarta.servlet.http.HttpServletRequest;");
+            b.append("""
+                    import jakarta.servlet.http.HttpServletRequest;
+                    import java.util.ArrayList;
+                    import java.util.HashMap;
+                    """);
         }
         String ifn = conf.getInterface();
         b.append("public class ").append(name).append(" implements ").append(ifn).append(" {");
@@ -85,8 +91,9 @@ public class ProxyFile extends AbstractFile<ProxyMethod> {
         String ifn = conf.getInterface();
         b.append("class ").append(name).append(" : ").append(ifn).append(" {\nprivate var impl: ")
                 .append(ifn).append("? = null\nconstructor() { impl = ").append(_default.fieldName)
-                .append(" }\nconstructor(locate: String?) { setLocate(locate) }\nfun setLocate(locate: String?) {\nval impl = map[locate]\nthis.impl = impl ?: ")
-                .append(_default.fieldName).append("\n}\n");
+                .append(" }\nconstructor(locate: String?) { setLocate(locate) }\nfun setLocate(locate: String?): ")
+                .append(name).append(" {\nval impl = map[locate]\nthis.impl = impl ?: ")
+                .append(_default.fieldName).append("\nreturn this\n}\n");
         if (conf.supportServlet()) {
             b.append("private class A(al: String) {\nvar l: String? = null\nvar q = 0f\ninit {\nval i = al.indexOf(\";q=\")\nif (i == -1) {\nl = al\nq = 1f\n} else {\nl = al.substring(0, i)\nq = al.substring(i + 3).toFloat()\n}}}\nconstructor(req: HttpServletRequest) { impl = get(req) }\n");
         }
@@ -95,17 +102,17 @@ public class ProxyFile extends AbstractFile<ProxyMethod> {
         }
         b.append("companion object {\nconst val defaultLocate = \"").append(_default.locate).append("\"\n");
         for (LocateFile lang : files) {
-            b.append("val ").append(lang.fieldName).append(" = ").append(lang.name).append("()\n");
+            b.append("@kotlin.jvm.JvmField\nval ").append(lang.fieldName).append(" = ").append(lang.name).append("()\n");
         }
         b.append("private val map = HashMap<String, ").append(ifn).append(">()\ninit {\n");
         for (LocateFile lang : files) {
             b.append("map[\"").append(lang.locate).append("\"] = ").append(lang.fieldName).append("\n");
         }
-        b.append("}\noperator fun get(locate: String): ").append(ifn).append("?  = map[locate]\n");
+        b.append("}\n@JvmStatic\noperator fun get(locate: String): ").append(ifn).append("?  = map[locate]\n");
         if (conf.supportServlet()) {
-            b.append("operator fun get(req: HttpServletRequest): ")
+            b.append("@JvmStatic\noperator fun get(req: HttpServletRequest): ")
                     .append(ifn)
-                    .append("? = Companion[req, defaultLocate]\noperator fun get(req: HttpServletRequest, fallback: String): ")
+                    .append("? = Companion[req, defaultLocate]\n@JvmStatic\noperator fun get(req: HttpServletRequest, fallback: String): ")
                     .append(ifn)
                     .append("? {\nval b = ArrayList<A>()\nval c: String = req.getHeader(\"Accept-Language\")\nif (c.isNotEmpty()) {\nval d = c.split(\",\".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()\nfor (e in d) { b.add(A(e.trim { it <= ' ' })) }\nb.sortWith { e: A, f: A -> -e.q.compareTo(f.q) }\n}\nfor (d in b) {\nval e = map[d.l]\nif (e != null && d.q != 0f) {\nreturn e\n}\n}\nreturn if (b.size == 0) {\nmap[fallback]\n} else if (b[0].q > 0) {\nmap[fallback]\n} else {\nvar e = false\nfor (f in b) {\nif (fallback == f.l) {\ne = true\nbreak\n}\n}\nif (!e) {\nreturn map[fallback]\n}\nval f: Set<Map.Entry<String?, ").append(ifn).append(">> = map.entries\nfor (g in b) {\nfor ((key, value) in f) {\nif (key != g.l) {\nreturn value\n}\n}\n}\nmap[fallback]\n}\n}");
         }

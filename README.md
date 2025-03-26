@@ -15,24 +15,6 @@ This is a plugin for IntelliJ IDEA, helps you with JAVA International developmen
 3. Generate java class from lang file: Tools → RESTLite i18n → Generate Java Class
 4. Regenerate java class will overwrite the olds. If you delete the lang file, please delete the class by yourself.
 
-## Version Update
-### 2.1
-- Fix bug.
-- Support kotlin.
-- Support javax-Servlet and jakarta-Servlet.
-
-### 2.0
-- The generated lang files is saved in the selected java package.
-- Add icon for menu and lang file.
-- Syntax highlighter for lang files.
-- Less escape character, only: ##{, \\n and \\r.
-### 1.1
-- Less escape character: typing #{ with ##{ instead; ~~no need to add escape character for " nor \ unless \b, \t, \n, \f, \r, \\ appear.~~
-
-## Update Plan
-- Compile lang file to class.(PS: IDEA doc not complete yet)
-- ~~Syntax highlighter.(done)~~
-
 ### At Last
 Welcome to commit bug / new feature.
 Wish it work for you.

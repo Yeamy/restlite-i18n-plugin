@@ -20,21 +20,24 @@ public class TemplateMenuAction extends AbstractMenuAction {
             #Name of real subject interface
             name=I18n
             
-            #Name of the proxy class
-            proxy=I18nProxy
+            #Name of the util class
+            util=I18nUtil
+            
+            #Name of the proxy class. Recommend using "util" instead.
+            #proxy=I18nProxy
             
             #Default language/locate(see more about http header Accept-Language: https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language)
             default=zh-CN
             
             #Set if generate auto-select-method with param HttpServletRequest (class in servlet)
-            #it may be one of(since version 2.0): none/jakarta/javax
-            servlet=javax
+            #it may be one of: none/jakarta/javax
+            servlet=jakarta
             """;
     public static final String CN_LANG = """
             #井号开头是备注
             #一行生成一个方法，等号左边为方法名，等号右边为文本内容（包括空格）
             #参数名用#{}标注，支持类型限制如下，不填类型既无限制
-            hello=你好#{name}，我是int#{int a}, long#{long l},short#{short b},char#{char c},float#{float f},double#{double d},string#{str s}
+            hello=你好#{name}，我是int#{int a}, long#{long l},short#{short b},char#{char c},float#{float f},double#{double d},string#{str s},boolean#{bool e}
             #如果需要输出 #{ 请使用 ##{ 代替；\\前无需加转义符，除了\\n和\\r
             txt=转义符示例##{name} " \\ \\b \\f \\t \\n \\r \\\\n\\\\r
             """;
@@ -42,7 +45,7 @@ public class TemplateMenuAction extends AbstractMenuAction {
             # I'm remark，start with '#'
             # One line generate one method, method name on the left of equals sign as the text content (include space) on the right
             # Param name in #{}, type limit supported, as the example below; none if no limit.
-            hello=Hello#{name},I'm string#{str s},int#{int a},long#{long l},short#{short b},char#{char c},float#{float f},double#{double d}
+            hello=Hello#{name},I'm string#{str s},int#{int a},long#{long l},short#{short b},char#{char c},float#{float f},double#{double d},boolean#{bool e}
             # Typing #{ with ##{ instead; no need to add escape character for \\ except \\n,\\r
             txt=escape character sample_##{name} " \\ \\b \\f \\t \\n \\r \\\\n\\\\r
             """;

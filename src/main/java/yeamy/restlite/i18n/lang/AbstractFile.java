@@ -1,7 +1,5 @@
 package yeamy.restlite.i18n.lang;
 
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Collection;
 
 public abstract class AbstractFile<T extends AbstractMethod> {

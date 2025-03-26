@@ -4,10 +4,10 @@ public class Configuration {
     public static final String SERVLET_JAVAX = "javax";
     public static final String SERVLET_JAKARTA = "jakarta";
     public static final String SERVLET_RESTLITE = "restlite";
-    private final String pkg, name, proxy, def;
+    private final String pkg, name, util, proxy, def;
     public final String servlet;
 
-    public Configuration(String pkg, String name, String proxy, String def, String servlet) throws LangException {
+    public Configuration(String pkg, String name, String util, String proxy, String def, String servlet) throws LangException {
         if (pkg == null) {
             throw new LangException("\"package\" not defined");
         }
@@ -16,7 +16,6 @@ public class Configuration {
             throw new LangException("\"name\" not defined");
         }
         this.name = name.trim();
-        this.proxy = (proxy == null) ? (name + "Proxy") : proxy;
         if (def == null) {
             throw new LangException("\"default\" not defined");
         }
@@ -40,6 +39,8 @@ public class Configuration {
         } else {
             this.servlet = null;
         }
+        this.util = util;
+        this.proxy = proxy;
     }
 
     public String getPackage() {
@@ -48,6 +49,10 @@ public class Configuration {
 
     public String getProxy() {
         return proxy;
+    }
+
+    public String getUtil() {
+        return util;
     }
 
     public String getInterface() {
@@ -65,5 +70,21 @@ public class Configuration {
 
     public boolean supportServlet() {
         return servlet != null;
+    }
+
+    public String getJavaLocateModel() {
+        return " implements " + name;
+    }
+
+    public String getKotlinLocateModel() {
+        return " : " + name;
+    }
+
+    public boolean hasProxy() {
+        return proxy != null && !proxy.isEmpty();
+    }
+
+    public boolean hasUtil() {
+        return util != null && !util.isEmpty();
     }
 }

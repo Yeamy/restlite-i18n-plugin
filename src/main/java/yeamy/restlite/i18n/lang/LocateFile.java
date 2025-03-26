@@ -18,9 +18,9 @@ public class LocateFile extends AbstractFile<LocateMethod> {
     public String javaSource() {
         StringBuilder b = new StringBuilder();
         if (pkg.length() > 0) {
-            b.append("package ").append(pkg).append(";");
+            b.append("package ").append(pkg).append(";\n");
         }
-        b.append("public class ").append(name).append(" implements ").append(conf.getInterface()).append(" {");
+        b.append("public class ").append(name).append(conf.getJavaLocateModel()).append(" {\n");
         for (LocateMethod method : methods) {
             method.createJavaSource(b);
         }
@@ -34,7 +34,7 @@ public class LocateFile extends AbstractFile<LocateMethod> {
         if (pkg.length() > 0) {
             b.append("package ").append(pkg).append("\n");
         }
-        b.append("class ").append(name).append(" : ").append(conf.getInterface()).append(" {");
+        b.append("class ").append(name).append(conf.getKotlinLocateModel()).append(" {\n");
         for (LocateMethod method : methods) {
             method.createKotlinSource(b);
         }

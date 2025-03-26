@@ -1,40 +1,34 @@
 package yeamy.restlite.i18n.lang;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 
-public class LocateMethod extends AbstractMethod implements Iterable<Object> {
-    private final ArrayList<Object> data;
+public class LocateMethod extends AbstractMethod {
+    private final ArrayList<Component> data;
 
-    public LocateMethod(InterfaceMethod ifm, String fn, int line, String text, int from) throws LangException {
-        super(ifm.name, ifm.params);
-        this.data = data(ifm, fn, line, text, from);
+    public LocateMethod(String name, LinkedHashMap<String, Param> params, String fileName, int line, String text, int from) throws LangException {
+        super(name, params);
+        this.data = readData(params, fileName, line, text, from);
     }
 
-    public LocateMethod(String name, String fn, int line, String text, int from) throws LangException {
+    public LocateMethod(String name, String fileName, int line, String text, int from) throws LangException {
         super(name, new LinkedHashMap<>());
-        this.data = data(null, fn, line, text, from);
-        LinkedHashMap<String, Param> params = this.params;
-        for (Object obj : data) {
-            if (obj instanceof Param) {
-                Param p = (Param) obj;
-                params.put(p.name, p);
+        this.data = readData(null, fileName, line, text, from);
+        for (Component li : data) {
+            if (li instanceof Param p) {
+                this.params.put(p.name, p);
             }
         }
     }
 
-    private static ArrayList<Object> data(InterfaceMethod ifm, String fn, int line, String text, int from)
-            throws LangException {
-        ArrayList<Object> data = new ArrayList<>();
+    private static ArrayList<Component> readData(LinkedHashMap<String, Param> params, String fileName, int line, String text, int from) throws LangException {
+        ArrayList<Component> data = new ArrayList<>();
         int split = from;
         while (true) {
             int begin = text.indexOf("#{", from);
             if (begin == -1) {
                 if (split != text.length() || data.size() == 0) {
-                    data.add(text.substring(split));
+                    data.add(new Text(text.substring(split)));
                 }
                 break;
             }
@@ -47,9 +41,9 @@ public class LocateMethod extends AbstractMethod implements Iterable<Object> {
             if (end == -1) {
                 throw new LangException("Unclosed parameter at line " + line);
             }
-            Param param = Param.parse(fn, line, text, begin, end);
-            if (ifm != null) {
-                Param p = ifm.get(param.name);
+            Param param = Param.parse(fileName, line, text, begin, end);
+            if (params != null) {
+                Param p = params.get(param.name);
                 if (p == null) {
                     throw new LangException("Not defined parameter at line " + line + " " + param.name);
                 } else if (!p.type.equals(param.type)) {
@@ -57,7 +51,7 @@ public class LocateMethod extends AbstractMethod implements Iterable<Object> {
                 }
             }
             if (split != begin - 2) {
-                data.add(text.substring(split, begin - 2));
+                data.add(new Text(text.substring(split, begin - 2)));
             }
             data.add(param);
             from = split = end + 1;
@@ -65,41 +59,31 @@ public class LocateMethod extends AbstractMethod implements Iterable<Object> {
         return data;
     }
 
-    @NotNull
-    @Override
-    public Iterator<Object> iterator() {
-        return data.iterator();
-    }
-
     @Override
     void createJavaSource(StringBuilder b) {
-        b.append("@Override public String ").append(name).append(" (");
+        b.append("    @Override\n    public String ").append(name).append(" (");
         if (params.size() > 0) {
             for (Param p : params()) {
                 b.append(p.type).append(" ").append(p.name).append(",");
             }
             b.deleteCharAt(b.length() - 1);
         }
-        b.append("){return ");
-        if (data.size() == 0) {
+        b.append(") {\n        return ");
+        if (data.isEmpty()) {
             b.append("\"\"");
         } else {
-            for (Object li : data) {
-                if (li instanceof String) {
-                    appendStr(b, li.toString());
-                } else {
-                    b.append(li);
-                }
-                b.append('+');
-            }
-            b.deleteCharAt(b.length() - 1);
+            data.forEach(li -> {
+                li.createJavaSource(b);
+                b.append(" + ");
+            });
+            b.delete(b.length() - 3, b.length());
         }
-        b.append(";}");
+        b.append(";\n    }\n");
     }
 
     @Override
     void createKotlinSource(StringBuilder b) {
-        b.append("override fun ").append(name).append(" (");
+        b.append("    override fun ").append(name).append(" (");
         if (params.size() > 0) {
             for (Param p : params()) {
                 b.append(p.name).append(": ").append(p.kotlinType()).append(", ");
@@ -110,65 +94,12 @@ public class LocateMethod extends AbstractMethod implements Iterable<Object> {
         if (data.size() == 0) {
             b.append("\"\"");
         } else {
-            for (Object li : data) {
-                if (li instanceof String) {
-                    appendKotlinStr(b, li.toString());
-                } else {
-                    b.append('$').append(li);
-                }
+            for (Component li : data) {
+                li.createKotlinSource(b);
             }
         }
         b.append("\"\n");
 
-    }
-
-    // Invalid escape sequence (valid ones are  \b  \t  \n  \f  \r  \"  \'  \\ )
-    private void appendStr(StringBuilder sb, String str) {
-        sb.append('"');
-        char[] cs = str.toCharArray();
-        for (int i = 0, max = cs.length - 1; i <= max; i++) {
-            char c = cs[i];
-            if (c == '#') {
-                if (i + 2 < max && cs[i + 1] == '#' && cs[i + 2] == '{') {
-                    continue;
-                }
-            } else if (c == '"') {
-                sb.append('\\');
-            } else if (c == '\\') {
-                if (i + 2 <= max && cs[i + 1] == '\\' && (cs[i + 2] == 'n' || cs[i + 2] == 'r')) {
-                    sb.append("\\\\\\\\").append(cs[i + 2]);
-                    i += 2;
-                    continue;
-                } else if (i + 1 < max && cs[i + 1] != 'n' && cs[i + 1] != 'r') {
-                    sb.append("\\");
-                }
-            }
-            sb.append(c);
-        }
-        sb.append('"');
-    }
-
-    private void appendKotlinStr(StringBuilder sb, String str) {
-        char[] cs = str.toCharArray();
-        for (int i = 0, max = cs.length - 1; i <= max; i++) {
-            char c = cs[i];
-            if (c == '#') {
-                if (i + 2 < max && cs[i + 1] == '#' && cs[i + 2] == '{') {
-                    continue;
-                }
-            } else if (c == '"' || c == '$') {
-                sb.append('\\');
-            } else if (c == '\\') {
-                if (i + 2 <= max && cs[i + 1] == '\\' && (cs[i + 2] == 'n' || cs[i + 2] == 'r')) {
-                    sb.append("\\\\\\\\").append(cs[i + 2]);
-                    i += 2;
-                    continue;
-                } else if (i + 1 < max && cs[i + 1] != 'n' && cs[i + 1] != 'r') {
-                    sb.append("\\");
-                }
-            }
-            sb.append(c);
-        }
     }
 
 }

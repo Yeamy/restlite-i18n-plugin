@@ -41,7 +41,10 @@ intellijPlatform {
         """.trimIndent()
         changeNotes = """
         <b>2.3</b><ul>
-            <li>Distinguish Java/Go version.</li>
+            <li>Change parameter's color of sentence.</li>
+            <li>Add boolean supported.</li>
+            <li>Add language parameter in build.lang file.</li>
+            <li>Add 'util' to replace 'proxy' in build.lang file.</li>
         </ul>
         <b>2.2</b><ul>
             <li>Show choose dialog when the package exists more than one directory.</li>
@@ -59,7 +62,10 @@ intellijPlatform {
         </ul>
         <b>-------------------------------------</b><br>
         <b>2.3</b><ul>
-            <li>区分Java和Go插件</li>
+            <li>修改词条参数的颜色</li>
+            <li>支持boolean类型</li>
+            <li>build文件新增language参数</li>
+            <li>build文件新增util取代proxy</li>
         </ul>
         <b>2.2</b><ul>
             <li>当同个包名存在多个目录时弹出选择框.</li>
@@ -78,7 +84,7 @@ intellijPlatform {
         """.trimIndent()
 
         ideaVersion {
-            sinceBuild = "223"
+            sinceBuild = "242"
             untilBuild = provider { null }
         }
 

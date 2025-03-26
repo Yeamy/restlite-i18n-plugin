@@ -76,11 +76,11 @@ public abstract class AbstractClassMenuAction extends AbstractMenuAction {
         assert build != null;
         readFile(build, (fn, line, key, text, from) -> map.put(key, text.substring(from).trim()));
         String language = map.get("language");
-        if (language == null || language.isEmpty() || language.equals("java")) {
+        if (language != null && !language.equals("java")) {
             return;
         }
-        Configuration conf = new Configuration(pkgName, map.get("name"), map.get("proxy"), map.get("default"),
-                map.get("servlet"));
+        Configuration conf = new Configuration(pkgName, map.get("name"), map.get("util"), map.get("proxy"),
+                map.get("default"), map.get("servlet"));
         //default
         VirtualFile defaultVf = todos.remove(conf.getDefault().toLowerCase() + ".lang");
         if (defaultVf == null) {
@@ -107,17 +107,23 @@ public abstract class AbstractClassMenuAction extends AbstractMenuAction {
                 if (ifm == null) {
                     throw new LangException("Undefined method \"" + key + "\" in file " + f.getName());
                 }
-                lms.add(new LocateMethod(ifm, fn, line, text, from));
+                lms.add(new LocateMethod(ifm.name, ifm.params, fn, line, text, from));
             });
             String locate = getLocate(f);
             LocateFile lf = new LocateFile(conf, locate, lms);
             lfs.add(lf);
             writeFiles.add(lf);
         }
+        // util
+        if (conf.hasUtil()) {
+            writeFiles.add(new UtilFile(conf, lfs, dlf));
+        }
         // proxy
-        ArrayList<ProxyMethod> pms = new ArrayList<>();
-        ims.forEach(m -> pms.add(new ProxyMethod(m)));
-        writeFiles.add(new ProxyFile(conf, pms, lfs, dlf));
+        if (conf.hasProxy()) {
+            ArrayList<ProxyMethod> pms = new ArrayList<>();
+            ims.forEach(m -> pms.add(new ProxyMethod(m)));
+            writeFiles.add(new ProxyFile(conf, pms, lfs, dlf));
+        }
         // write
         for (AbstractFile<?> f : writeFiles) {
             createClassFile(req, pkg, f);

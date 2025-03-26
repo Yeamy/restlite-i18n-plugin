@@ -5,7 +5,7 @@ import java.util.LinkedHashMap;
 
 public abstract class AbstractMethod {
 	public final String name;
-	protected final LinkedHashMap<String, Param> params;
+	public final LinkedHashMap<String, Param> params;
 
 	protected AbstractMethod(String name, LinkedHashMap<String, Param> params) {
 		this.name = name;
