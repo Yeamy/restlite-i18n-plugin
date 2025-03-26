@@ -32,7 +32,7 @@ public class LangSyntaxHighlighter extends SyntaxHighlighterBase {
             DefaultLanguageHighlighterColors.PARAMETER
     };
     private static final TextAttributesKey[] PARAM_NAME = new TextAttributesKey[]{
-            DefaultLanguageHighlighterColors.PARAMETER
+            DefaultLanguageHighlighterColors.INSTANCE_FIELD
     };
     private static final TextAttributesKey[] STRING = new TextAttributesKey[]{
             DefaultLanguageHighlighterColors.STRING

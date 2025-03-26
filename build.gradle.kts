@@ -44,11 +44,16 @@ intellijPlatform {
         changeNotes = """
     <b>1.0.1</b><ul>
         <li>New tree Directory Picker Dialog.</li>
+        <li>Fix lang file param name display.</li>
+    </ul>
+    <b>1.0.1</b><ul>
+        <li>改用新树状文件夹选择器。</li>
+        <li>修复lang文件参数名显示问题。</li>
     </ul>
         """.trimIndent()
 
         ideaVersion {
-            sinceBuild = "223"
+            sinceBuild = "243"
             untilBuild = provider { null }
         }
 
