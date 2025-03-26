@@ -289,7 +289,7 @@ public class LangFlexLexer implements FlexLexer {
         return goError(tokenStart);
     }
 
-    private static final String[] paramType = {"str", "double", "float", "long", "int", "short", "char"};
+    private static final String[] paramType = {"str", "double", "float", "long", "int", "short", "char", "bool"};
 
     private boolean isKeyword(CharSequence s) {
         for (String kw : paramType) {

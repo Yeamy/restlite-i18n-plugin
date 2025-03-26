@@ -1,6 +1,6 @@
 package yeamy.restlite.i18n.lang;
 
-public class Param {
+public class Param implements Component{
     public final String type, name;
 
     private Param(String type, String name) {
@@ -14,6 +14,7 @@ public class Param {
             case "long" -> "Long";
             case "short" -> "Short";
             case "char" -> "Char";
+            case "boolean" -> "Boolean";
             case "float" -> "Float";
             case "double" -> "Double";
             case "String" -> type;
@@ -71,6 +72,7 @@ public class Param {
         String str = text.substring(s, m);
         type = switch (str) {
             case "str" -> "String";
+            case "bool" -> "boolean";
             case "double", "float", "long", "int", "short", "char" -> str;
             default -> null;
         };
