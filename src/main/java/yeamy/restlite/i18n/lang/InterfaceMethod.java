@@ -1,39 +1,20 @@
 package yeamy.restlite.i18n.lang;
 
-import java.util.LinkedHashMap;
-
 public class InterfaceMethod extends AbstractMethod {
 
-    public static InterfaceMethod create(LocateMethod lm) {
-        return new InterfaceMethod(lm.name, lm.params);
-    }
-
-    private InterfaceMethod(String name, LinkedHashMap<String, Param> params) {
-        super(name, params);
+    public InterfaceMethod(LocateMethod lm) {
+        super(lm.name, lm.params);
     }
 
     @Override
-    public void createJavaSource(StringBuilder b) {
-        b.append("String ").append(name).append(" (");
+    void createSource(StringBuilder b) {
+        b.append("  ").append(name).append('(');
         if (params.size() > 0) {
             for (Param p : params()) {
-                b.append(p.type).append(" ").append(p.name).append(",");
+                b.append(p.name).append(": ").append(p.type).append(", ");
             }
-            b.deleteCharAt(b.length() - 1);
+            b.delete(b.length() - 2, b.length());
         }
-        b.append(");");
-    }
-
-    @Override
-    void createKotlinSource(StringBuilder b) {
-        b.append("fun ").append(name).append(" (");
-        if (params.size() > 0) {
-            for (Param p : params()) {
-                b.append(p.name).append(": ").append(p.kotlinType()).append(", ");
-            }
-            b.deleteCharAt(b.length() - 2);
-        }
-        b.append(") : String\n");
-
+        b.append("): string \n\n");
     }
 }

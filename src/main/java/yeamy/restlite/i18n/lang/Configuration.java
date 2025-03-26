@@ -1,57 +1,27 @@
 package yeamy.restlite.i18n.lang;
 
 public class Configuration {
-    public static final String SERVLET_JAVAX = "javax";
-    public static final String SERVLET_JAKARTA = "jakarta";
-    public static final String SERVLET_RESTLITE = "restlite";
-    private final String pkg, name, proxy, def;
-    public final String servlet;
+    private final String name, util, def;
 
-    public Configuration(String pkg, String name, String proxy, String def, String servlet) throws LangException {
-        if (pkg == null) {
-            throw new LangException("\"package\" not defined");
-        }
-        this.pkg = pkg.trim();
+    public Configuration(String name, String util, String def) throws LangException {
         if (name == null) {
             throw new LangException("\"name\" not defined");
         }
         this.name = name.trim();
-        this.proxy = (proxy == null) ? (name + "Proxy") : proxy;
-        if (def == null) {
-            throw new LangException("\"default\" not defined");
-        }
+        this.util = util.trim();
         this.def = def.trim();
-        if (servlet != null) {
-            switch (servlet.trim().toLowerCase()) {
-                case "true":
-                case SERVLET_JAVAX:
-                    this.servlet = SERVLET_JAVAX;
-                    break;
-                case SERVLET_JAKARTA:
-                    this.servlet = SERVLET_JAKARTA;
-                    break;
-                case SERVLET_RESTLITE:
-                    this.servlet = SERVLET_RESTLITE;
-                    break;
-                default:
-                    this.servlet = null;
-                    break;
-            }
-        } else {
-            this.servlet = null;
-        }
     }
 
-    public String getPackage() {
-        return pkg;
-    }
-
-    public String getProxy() {
-        return proxy;
+    public String getName() {
+        return name;
     }
 
     public String getInterface() {
         return name;
+    }
+
+    public String getUtil() {
+        return util;
     }
 
     public String getName(String locate) {
@@ -63,7 +33,11 @@ public class Configuration {
         return def;
     }
 
-    public boolean supportServlet() {
-        return servlet != null;
+    public String getDefaultFieldName() {
+        return getFieldName(def);
+    }
+
+    public String getFieldName(String locate) {
+        return locate.replace("-", "");
     }
 }

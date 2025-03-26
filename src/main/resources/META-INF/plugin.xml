@@ -6,7 +6,6 @@
     <category>Tools Integration</category>
     <depends>com.intellij.modules.platform</depends>
     <depends>com.intellij.modules.lang</depends>
-    <depends>com.intellij.java</depends>
 
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
@@ -23,19 +22,15 @@
 
     </extensionPoints>
     <actions>
-        <group id="yeamy.restlite" text="RESTLite i18n" description="Generate i18n file for java" popup="true"
+        <group id="yeamy.restlite" text="RESTLite i18n" description="Generate i18n file for ArkTS" popup="true"
                icon="/icons/menu.svg">
             <add-to-group group-id="ToolsMenu" anchor="last"/>
             <action id="yeamy.restlite.i18n.TemplateMenuAction" class="yeamy.restlite.i18n.TemplateMenuAction"
-                    text="Generate Lang File"
+                    text="Generate ArkTS Lang File"
                     description="Generate sample file of RESTLite i18n">
             </action>
-            <action id="yeamy.restlite.i18n.JavaAction" class="yeamy.restlite.i18n.JavaMenuAction"
-                    text="Generate Java Class"
-                    description="Generate java class from lang file">
-            </action>
-            <action id="yeamy.restlite.i18n.KotlinAction" class="yeamy.restlite.i18n.KotlinMenuAction"
-                    text="Generate Kotlin Class"
+            <action id="yeamy.restlite.i18n.KotlinAction" class="yeamy.restlite.i18n.ArkTSMenuAction"
+                    text="Generate ArkTS Class"
                     description="Generate Kotlin class from lang file">
             </action>
         </group>

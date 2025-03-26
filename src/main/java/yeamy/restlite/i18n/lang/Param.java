@@ -1,29 +1,11 @@
 package yeamy.restlite.i18n.lang;
 
-public class Param {
+public class Param implements Component{
     public final String type, name;
 
     private Param(String type, String name) {
         this.type = type;
         this.name = name;
-    }
-
-    public String kotlinType() {
-        return switch (type) {
-            case "int" -> "Int";
-            case "long" -> "Long";
-            case "short" -> "Short";
-            case "char" -> "Char";
-            case "float" -> "Float";
-            case "double" -> "Double";
-            case "String" -> type;
-            default -> "Any";
-        };
-    }
-
-    @Override
-    public String toString() {
-        return name;
     }
 
     public static Param parse(String file, int line, String text, int begin, int end) throws LangException {
@@ -33,7 +15,7 @@ public class Param {
         while (s <= e) {
             char c = text.charAt(s);
             if (c != ' ' && c != '\t') {
-                if (JavaChecker.firstCharValid(c)) {
+                if (ArkTSChecker.firstCharValid(c)) {
                     break;
                 } else {
                     throw LangException.invalidParamName(file, line, text.substring(begin, end));
@@ -67,17 +49,18 @@ public class Param {
         if (m == e) {
             return new Param("Object", text.substring(s, e));
         }
-        String type;
         String str = text.substring(s, m);
-        type = switch (str) {
-            case "str" -> "String";
-            case "double", "float", "long", "int", "short", "char" -> str;
+        String type = switch (str) {
+            case "bool" -> "boolean";
+            case "num" -> "number";
+            case "str" -> "string";
+            case "obj" -> "Object";
             default -> null;
         };
         while (true) {
             char c = text.charAt(m);
             if (c != ' ' && c != '\t') {
-                if (JavaChecker.firstCharValid(c)) {
+                if (ArkTSChecker.firstCharValid(c)) {
                     break;
                 } else {
                     throw LangException.invalidParamName(file, line, text.substring(begin, end));
@@ -92,9 +75,14 @@ public class Param {
                     + text.substring(s, m));
         }
         String name = text.substring(m, e);
-        if (name.indexOf(' ') != -1 || name.indexOf('\t') != -1 || JavaChecker.nameInValid(name)) {
+        if (name.indexOf(' ') != -1 || name.indexOf('\t') != -1 || ArkTSChecker.nameInValid(name)) {
             throw LangException.invalidParamName(file, line, text.substring(begin, end));
         }
         return new Param(type, name);
+    }
+
+    @Override
+    public void createSource(StringBuilder sb) {
+        sb.append(name);
     }
 }

@@ -289,11 +289,18 @@ public class LangFlexLexer implements FlexLexer {
         return goError(tokenStart);
     }
 
-    private static final String[] paramType = {"str", "double", "float", "long", "int", "short", "char"};
+    private static final String[] paramType = {"str", "num", "bool", "obj"};
 
     private boolean isKeyword(CharSequence s) {
         for (String kw : paramType) {
             if (kw.equals(s.toString())) return true;
+        }
+        if (s.charAt(0) == 'f') {
+            try {
+                Integer.parseInt(s.subSequence(1, s.length()).toString());
+                return true;
+            } catch (Exception e) {
+            }
         }
         return false;
     }

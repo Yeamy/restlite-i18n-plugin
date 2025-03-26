@@ -20,8 +20,6 @@ public abstract class AbstractMethod {
 		return params.get(name);
 	}
 
-	abstract void createJavaSource(StringBuilder b);
-
-	abstract void createKotlinSource(StringBuilder b);
+	abstract void createSource(StringBuilder b);
 
 }

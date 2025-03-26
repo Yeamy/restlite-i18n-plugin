@@ -1,54 +1,24 @@
 package yeamy.restlite.i18n.lang;
 
-import org.jetbrains.annotations.NotNull;
-
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 
-public class InterfaceFile extends AbstractFile<InterfaceMethod> implements Iterable<InterfaceMethod> {
+public class InterfaceFile extends AbstractFile<InterfaceMethod> {
+    private Configuration conf;
     private final HashMap<String, InterfaceMethod> map = new HashMap<>();
 
     public InterfaceFile(Configuration conf, Collection<InterfaceMethod> methods) {
-        super(conf.getPackage(), conf.getInterface(), methods);
+        super(conf.getInterface(), methods);
+        this.conf = conf;
         methods.forEach(m -> map.put(m.name, m));
     }
 
     @Override
-    public @NotNull Iterator<InterfaceMethod> iterator() {
-        return methods.iterator();
-    }
-
-    @Override
-    public String javaSource() {
+    public String createSource() {
         StringBuilder b = new StringBuilder();
-        if (pkg.length() > 0) {
-            b.append("package ").append(pkg).append(";");
-        }
-//        if (supportRestLite) {
-//            b.append("import yeamy.restlite.annotation.Generator;");
-//            b.append("@Generator(className = \"").append(pkg).append('.')
-//                    .append(conf.getProxy()).append("\", method = \"get\")");
-//        }
-        b.append("public interface ").append(name).append(" {");
-        for (InterfaceMethod method : methods) {
-            method.createJavaSource(b);
-        }
-        b.append("}");
-        return b.toString();
-    }
-
-    @Override
-    public String kotlinSource() {
-        StringBuilder b = new StringBuilder();
-        if (pkg.length() > 0) {
-            b.append("package ").append(pkg).append('\n');
-        }
-        b.append("interface ").append(name).append(" {\n");
-        for (InterfaceMethod method : methods) {
-            method.createKotlinSource(b);
-        }
-        b.append("}");
+        b.append("export default interface ").append(name).append(" {\n");
+        methods.forEach(method -> method.createSource(b));
+        b.setCharAt(b.length() - 1, '}');
         return b.toString();
     }
 

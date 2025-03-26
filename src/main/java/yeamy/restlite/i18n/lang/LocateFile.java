@@ -8,37 +8,20 @@ public class LocateFile extends AbstractFile<LocateMethod> {
     private final Configuration conf;
 
     public LocateFile(Configuration conf, String locate, Collection<LocateMethod> methods) {
-        super(conf.getPackage(), conf.getName(locate), methods);
+        super(conf.getName(locate), methods);
         this.conf = conf;
         this.locate = locate;
-        this.fieldName = locate.replace("-", "");
+        this.fieldName = conf.getFieldName(locate);
     }
 
     @Override
-    public String javaSource() {
+    public String createSource() {
         StringBuilder b = new StringBuilder();
-        if (pkg.length() > 0) {
-            b.append("package ").append(pkg).append(";");
-        }
-        b.append("public class ").append(name).append(" implements ").append(conf.getInterface()).append(" {");
-        for (LocateMethod method : methods) {
-            method.createJavaSource(b);
-        }
-        b.append("}");
-        return b.toString();
-    }
-
-    @Override
-    public String kotlinSource() {
-        StringBuilder b = new StringBuilder();
-        if (pkg.length() > 0) {
-            b.append("package ").append(pkg).append("\n");
-        }
-        b.append("class ").append(name).append(" : ").append(conf.getInterface()).append(" {");
-        for (LocateMethod method : methods) {
-            method.createKotlinSource(b);
-        }
-        b.append("}");
+        String ifn = conf.getInterface();
+        b.append("import ").append(ifn).append(" from './").append(ifn).append("';\n\n");
+        b.append("export class ").append(name).append(" implements ").append(ifn).append(" {\n");
+        methods.forEach(method -> method.createSource(b));
+        b.setCharAt(b.length() - 1, '}');
         return b.toString();
     }
 }
