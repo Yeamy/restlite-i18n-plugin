@@ -8,7 +8,7 @@ import java.util.TreeSet;
 public class OutputFile {
     private final Configuration conf;
     private final LinkedHashMap<String, OutputMethod> methods = new LinkedHashMap<>();
-    private LinkedHashSet<String> locate = new LinkedHashSet<>();
+    private final LinkedHashSet<String> locate = new LinkedHashSet<>();
 
     public OutputFile(Configuration conf, ArrayList<LocateMethod> methods) {
         this.conf = conf;
@@ -22,7 +22,7 @@ public class OutputFile {
 
     public String createSource() {
         StringBuilder b = new StringBuilder();
-        if (conf.getPackage().length() > 0) {
+        if (!conf.getPackage().isEmpty()) {
             b.append("package ").append(conf.getPackage()).append('\n');
         }
         int importIndex = b.length();
@@ -70,7 +70,7 @@ public class OutputFile {
         } else {
             TreeSet<String> imports = new TreeSet<>();
             methods.values().forEach(m -> imports.addAll(m.imports()));
-            if (imports.size() > 0) {
+            if (!imports.isEmpty()) {
                 StringBuilder importStr = new StringBuilder();
                 importStr.append("import (");
                 imports.forEach(pkg -> importStr.append("    \"").append(pkg).append("\"\n"));

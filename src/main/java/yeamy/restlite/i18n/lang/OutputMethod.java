@@ -15,7 +15,7 @@ public class OutputMethod extends AbstractMethod {
     @Override
     void createSource(StringBuilder b) {
         b.append("\nfunc ").append(name);
-        if (params.size() > 0) {
+        if (!params.isEmpty()) {
             b.append("(lang string, ");
             params.values().forEach(p -> b.append(p.name).append(' ').append(p.type).append(", "));
             b.delete(b.length() - 2, b.length());

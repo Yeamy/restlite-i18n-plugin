@@ -27,7 +27,7 @@ public class LocateMethod extends AbstractMethod {
         while (true) {
             int begin = text.indexOf("#{", from);
             if (begin == -1) {
-                if (split != text.length() || data.size() == 0) {
+                if (split != text.length() || data.isEmpty()) {
                     data.add(new Text(text.substring(split)));
                 }
                 break;

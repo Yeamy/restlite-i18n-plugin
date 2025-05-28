@@ -13,7 +13,7 @@ public interface LineReader {
             if (text == null) {
                 break;
             }
-            if (text.length() == 0 || text.charAt(0) == '#') {
+            if (text.isEmpty() || text.charAt(0) == '#') {
                 continue;
             }
             int split = text.indexOf('=');
