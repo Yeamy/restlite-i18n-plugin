@@ -1,7 +1,9 @@
+import org.jetbrains.intellij.platform.gradle.TestFrameworkType
+
 plugins {
     id("java")
-    id("org.jetbrains.intellij.platform") version "2.3.0"
-//    id("org.jetbrains.intellij.platform.migration") version "2.3.0"
+    id("org.jetbrains.intellij.platform") version "2.6.0"
+    id("org.jetbrains.intellij.platform.migration") version "2.6.0"
 }
 
 repositories {
@@ -19,14 +21,14 @@ intellijPlatform {
 
     pluginConfiguration {
         id = "yeamy.restlite.i18n.go"
-        name = "RESTLite i18n"
-        version = "1.0.1"
+        name = "RESTLite i18n(GO)"
+        version = "1.1.0"
         description = """
-    · This plugin helps you with Go <b>International</b> development.<br>
-    · Create simple customization files and generate go source file with it. All sentences obtained through methods.<br>
+    This plugin helps you with Go <b>International</b> development.<br>
+    Create simple customization files and generate go source file with it. All sentences obtained through methods.<br>
     <br>
-    · 该插件可以帮助你轻松实现Go<b>多语言国际化</b>开发。<br>
-    · 通过简单的自定义文件生成多地区语言Go源码，所有词条通过方法获取。<br>
+    该插件可以帮助你轻松实现Go<b>多语言国际化</b>开发。<br>
+    通过简单的自定义文件生成多地区语言Go源码，所有词条通过方法获取。<br>
     <br>
     <b>How to use:</b><br>
     <b>1.</b> Generate *.lang file for your project/module: Tools → RESTLite i18n → Generate Go Lang File<br>
@@ -79,5 +81,10 @@ intellijPlatform {
 dependencies {
     intellijPlatform {
         goland("2024.3.4")
+//        intellijIdeaCommunity("2024.3.4")
+//        local("/Applications/IntelliJ IDEA CE.app")
+        testFramework(TestFrameworkType.Platform)
     }
+
+    testImplementation("junit:junit:4.13.2")
 }
