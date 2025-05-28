@@ -1,5 +1,6 @@
 package yeamy.restlite.i18n.edit;
 
+import com.intellij.codeInsight.daemon.impl.HighlightInfoType;
 import com.intellij.lexer.FlexAdapter;
 import com.intellij.lexer.Lexer;
 import com.intellij.openapi.editor.DefaultLanguageHighlighterColors;
@@ -19,7 +20,7 @@ public class LangSyntaxHighlighter extends SyntaxHighlighterBase {
     private static final TextAttributesKey[] STR_ESCAPE = new TextAttributesKey[]{
             DefaultLanguageHighlighterColors.VALID_STRING_ESCAPE
     };
-    private static final TextAttributesKey[] METHOD = new TextAttributesKey[]{
+    private static final TextAttributesKey[] METHOD_NAME = new TextAttributesKey[]{
             DefaultLanguageHighlighterColors.FUNCTION_DECLARATION
     };
     private static final TextAttributesKey[] SEPARATOR = new TextAttributesKey[]{
@@ -40,6 +41,9 @@ public class LangSyntaxHighlighter extends SyntaxHighlighterBase {
     private static final TextAttributesKey[] COMMENT = new TextAttributesKey[]{
             DefaultLanguageHighlighterColors.LINE_COMMENT
     };
+    private static final TextAttributesKey[] ERROR = new TextAttributesKey[]{
+            HighlightInfoType.ERROR.getAttributesKey()
+    };
 
     private static final TextAttributesKey[] EMPTY_KEYS = new TextAttributesKey[0];
 
@@ -47,29 +51,24 @@ public class LangSyntaxHighlighter extends SyntaxHighlighterBase {
     public TextAttributesKey @NotNull [] getTokenHighlights(IElementType tokenType) {
         if (tokenType.equals(LangTokenType.STR_ESCAPE)) {
             return STR_ESCAPE;
-        }
-        if (tokenType.equals(LangTokenType.METHOD)) {
-            return METHOD;
-        }
-        if (tokenType.equals(LangTokenType.SEPARATOR)) {
+        } else if (tokenType.equals(LangTokenType.METHOD_NAME)) {
+            return METHOD_NAME;
+        } else if (tokenType.equals(LangTokenType.SEPARATOR)) {
             return SEPARATOR;
-        }
-        if (tokenType.equals(LangTokenType.PARAM_START) || tokenType.equals(LangTokenType.PARAM_END)) {
+        } else if (tokenType.equals(LangTokenType.PARAM_START) || tokenType.equals(LangTokenType.PARAM_END)) {
             return PARENTHESES;
-        }
-        if (tokenType.equals(LangTokenType.PARAM_TYPE)) {
+        } else if (tokenType.equals(LangTokenType.PARAM_TYPE)) {
             return PARAM_TYPE;
-        }
-        if (tokenType.equals(LangTokenType.PARAM_NAME)) {
+        } else if (tokenType.equals(LangTokenType.PARAM_NAME)) {
             return PARAM_NAME;
-        }
-        if (tokenType.equals(LangTokenType.STRING)) {
+        } else if (tokenType.equals(LangTokenType.STRING)) {
             return STRING;
-        }
-        if (tokenType.equals(LangTokenType.COMMENT)) {
+        } else if (tokenType.equals(LangTokenType.COMMENT)) {
             return COMMENT;
+        } else if (tokenType.equals(LangTokenType.ERROR)) {
+            return ERROR;
         }
-        //SPACE, ERROR
+        //SPACE
         return EMPTY_KEYS;
     }
 
