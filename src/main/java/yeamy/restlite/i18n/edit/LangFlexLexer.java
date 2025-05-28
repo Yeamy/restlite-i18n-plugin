@@ -66,25 +66,17 @@ public class LangFlexLexer implements FlexLexer {
         }
         this.tokenStart = tokenEnd;
         this.tokenEnd = end;
-        switch (state) {
-            case START:
-                return readMethod();
-            case SEPARATOR:
-                return readSeparator();
-            case STRING:
-                return readString();
-            case STR_ESCAPE:
-                return readStrEscape();
-            case PARAM_START:
-                return readParamStart();
-            case PARAM_TYPE:
-                return readParamType();
-            case PARAM_NAME:
-                return readParamName();
-            case PARAM_END:
-                return readParamEnd();
-        }
-        return LangTokenType.SPACE;
+        return switch (state) {
+            case START -> readMethod();
+            case SEPARATOR -> readSeparator();
+            case STRING -> readString();
+            case STR_ESCAPE -> readStrEscape();
+            case PARAM_START -> readParamStart();
+            case PARAM_TYPE -> readParamType();
+            case PARAM_NAME -> readParamName();
+            case PARAM_END -> readParamEnd();
+            default -> LangTokenType.CRLF;
+        };
     }
 
     private IElementType skipSpace(boolean skipLine) {
@@ -99,7 +91,7 @@ public class LangFlexLexer implements FlexLexer {
             }
         }
         if (tokenEnd > tokenStart) {
-            return LangTokenType.SPACE;
+            return LangTokenType.CRLF;
         }
         tokenEnd = tokenStart;
         return null;
@@ -137,7 +129,7 @@ public class LangFlexLexer implements FlexLexer {
             }
         }
         state = SEPARATOR;
-        return LangTokenType.METHOD;
+        return LangTokenType.METHOD_NAME;
     }
 
     private IElementType readComment() {
