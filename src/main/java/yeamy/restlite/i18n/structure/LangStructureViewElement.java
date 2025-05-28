@@ -65,21 +65,12 @@ public class LangStructureViewElement implements StructureViewTreeElement, Sorta
             for (PsiElement child : file.getChildren()) {
                 if (child.getNode().getElementType().equals(LangTokenType.METHOD)
                         && child instanceof LangPsiElement element) {
-                    out.add(new LangStructureViewElement(element, getMethodName(element)));
+                    out.add(new LangStructureViewElement(element, getPresentation().getPresentableText()));
                 }
             }
             return out.toArray(new TreeElement[0]);
         }
         return EMPTY_ARRAY;
-    }
-
-    private String getMethodName(LangPsiElement element) {
-        for (PsiElement child : element.getChildren()) {
-            if (child.getNode().getElementType().equals(LangTokenType.METHOD_NAME)) {
-                return child.getText();
-            }
-        }
-        return "< ... >";
     }
 
 }
