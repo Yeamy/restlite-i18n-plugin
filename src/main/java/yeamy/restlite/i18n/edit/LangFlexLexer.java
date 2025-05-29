@@ -75,7 +75,7 @@ public class LangFlexLexer implements FlexLexer {
             case PARAM_TYPE -> readParamType();
             case PARAM_NAME -> readParamName();
             case PARAM_END -> readParamEnd();
-            default -> LangTokenType.SPACE;
+            default -> LangTokenType.CRLF;
         };
     }
 
@@ -91,7 +91,7 @@ public class LangFlexLexer implements FlexLexer {
             }
         }
         if (tokenEnd > tokenStart) {
-            return LangTokenType.SPACE;
+            return LangTokenType.CRLF;
         }
         tokenEnd = tokenStart;
         return null;
@@ -129,7 +129,7 @@ public class LangFlexLexer implements FlexLexer {
             }
         }
         state = SEPARATOR;
-        return LangTokenType.METHOD;
+        return LangTokenType.METHOD_NAME;
     }
 
     private IElementType readComment() {

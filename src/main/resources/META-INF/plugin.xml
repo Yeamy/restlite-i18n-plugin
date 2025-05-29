@@ -15,19 +15,25 @@
                   language="Lang" extensions="lang"/>
         <lang.syntaxHighlighterFactory language="Lang"
                                        implementationClass="yeamy.restlite.i18n.edit.LangSyntaxHighlighterFactory"/>
+        <lang.parserDefinition
+                language="Lang"
+                implementationClass="yeamy.restlite.i18n.edit.LangParserDefinition"/>
+        <lang.psiStructureViewFactory
+                language="Lang"
+                implementationClass="yeamy.restlite.i18n.structure.LangStructureViewFactory"/>
     </extensions>
     <extensionPoints>
-        <extensionPoint name="com.intellij.fileType" beanClass="com.intellij.lang.LanguageExtensionPoint">
+        <extensionPoint name="com.intellij.fileType" beanClass="com.intellij.lang.LanguageExtensionPoint"
+                        dynamic="true">
             <with attribute="implementationClass" implements="com.intellij.psi.LanguageSubstitutor"/>
         </extensionPoint>
-
     </extensionPoints>
     <actions>
         <group id="yeamy.restlite" text="RESTLite i18n" description="Generate i18n file for java" popup="true"
                icon="/icons/menu.svg">
             <add-to-group group-id="ToolsMenu" anchor="last"/>
             <action id="yeamy.restlite.i18n.TemplateMenuAction" class="yeamy.restlite.i18n.TemplateMenuAction"
-                    text="Generate Java Lang File"
+                    text="Generate Lang File (Java)"
                     description="Generate sample file of RESTLite i18n">
             </action>
             <action id="yeamy.restlite.i18n.JavaAction" class="yeamy.restlite.i18n.JavaMenuAction"

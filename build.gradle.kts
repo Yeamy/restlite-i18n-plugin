@@ -1,7 +1,7 @@
 plugins {
     id("java")
-    id("org.jetbrains.intellij.platform") version "2.3.0"
-    id("org.jetbrains.intellij.platform.migration") version "2.3.0"
+    id("org.jetbrains.intellij.platform") version "2.6.0"
+    id("org.jetbrains.intellij.platform.migration") version "2.6.0"
 }
 
 repositories {
@@ -20,12 +20,12 @@ intellijPlatform {
     pluginConfiguration {
         id = "yeamy.restlite.i18n"
         name = "RESTLite i18n"
-        version = "2.3"
+        version = "2.4"
         description = """
-    · This plugin helps you with <b>JAVA International</b> development.<br>
-    · Create simple customization files and generate java/kotlin class with it. All words obtained through methods rather than string format.<br>
-    · 该插件可以帮助你轻松实现<b>JAVA国际化</b>开发。<br>
-    · 通过简单的自定义文件生成多语言Java/Kotlin类，所有词条通过方法获取，而非Map<> + String.format形式。<br>
+    This plugin helps you with <b>JAVA International</b> development.<br>
+    Create simple customization files and generate java/kotlin class with it. All words obtained through methods rather than string format.<br>
+    该插件可以帮助你轻松实现<b>JAVA国际化</b>开发。<br>
+    通过简单的自定义文件生成多语言Java/Kotlin类，所有词条通过方法获取，而非Map<> + String.format形式。<br>
     <br>
     <b>How to use:</b><br>
     <b>1.</b> Generate *.lang file for your project/module: Tools → RESTLite i18n → Generate Java Lang File<br>
@@ -40,6 +40,9 @@ intellijPlatform {
     <br>
         """.trimIndent()
         changeNotes = """
+        <b>2.4</b><ul>
+            <li>Support Structure View.</li>
+        </ul>
         <b>2.3</b><ul>
             <li>Change parameter's color of sentence.</li>
             <li>Add boolean supported.</li>
@@ -61,6 +64,9 @@ intellijPlatform {
             <li>Less escape character, only: ##{ \\n \\r.</li>
         </ul>
         <b>-------------------------------------</b><br>
+        <b>2.4</b><ul>
+            <li>支持文件结构视图</li>
+        </ul>
         <b>2.3</b><ul>
             <li>修改词条参数的颜色</li>
             <li>支持boolean类型</li>

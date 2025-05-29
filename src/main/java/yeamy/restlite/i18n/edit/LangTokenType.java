@@ -1,19 +1,25 @@
 package yeamy.restlite.i18n.edit;
 
-import com.intellij.psi.StringEscapesTokenTypes;
-import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
+import org.jetbrains.annotations.NonNls;
+import org.jetbrains.annotations.NotNull;
 
-public interface LangTokenType {
-    IElementType SPACE = TokenType.WHITE_SPACE;
-    IElementType ERROR = TokenType.BAD_CHARACTER;
-    IElementType METHOD = new IElementType("METHOD", LangLanguage.INSTANCE);
-    IElementType SEPARATOR = new IElementType("SEPARATOR", LangLanguage.INSTANCE);
-    IElementType PARAM_START = new IElementType("PARAM_START", LangLanguage.INSTANCE);
-    IElementType PARAM_END = new IElementType("PARAM_END", LangLanguage.INSTANCE);
-    IElementType PARAM_TYPE = new IElementType("PARAM_TYPE", LangLanguage.INSTANCE);
-    IElementType PARAM_NAME = new IElementType("PARAM_NAME", LangLanguage.INSTANCE);
-    IElementType STRING = new IElementType("STRING", LangLanguage.INSTANCE);
-    IElementType STR_ESCAPE = StringEscapesTokenTypes.VALID_STRING_ESCAPE_TOKEN;
-    IElementType COMMENT = new IElementType("COMMENT", LangLanguage.INSTANCE);
+public class LangTokenType extends IElementType {
+    public static final IElementType CRLF = new LangTokenType("CRLF");
+    public static final IElementType ERROR = new LangTokenType("ERROR");
+    public static final IElementType METHOD = new LangTokenType("METHOD");
+    public static final IElementType METHOD_NAME = new LangTokenType("METHOD_NAME");
+    public static final IElementType SEPARATOR = new LangTokenType("SEPARATOR");
+    public static final IElementType PARAM_START = new LangTokenType("PARAM_START");
+    public static final IElementType PARAM_END = new LangTokenType("PARAM_END");
+    public static final IElementType PARAM_TYPE = new LangTokenType("PARAM_TYPE");
+    public static final IElementType PARAM_NAME = new LangTokenType("PARAM_NAME");
+    public static final IElementType STRING = new LangTokenType("STRING");
+    public static final IElementType STR_ESCAPE = new LangTokenType("STR_ESCAPE");
+    public static final IElementType COMMENT = new LangTokenType("COMMENT");
+
+    public LangTokenType(@NonNls @NotNull String debugName) {
+        super(debugName, LangLanguage.INSTANCE);
+    }
+
 }
